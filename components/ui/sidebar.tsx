@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
+import { LayoutDashboard, PanelLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -311,6 +311,33 @@ const SidebarTrigger = React.forwardRef<
 });
 
 SidebarTrigger.displayName = "SidebarTrigger";
+
+const SidebarTriggerMobile = React.forwardRef<
+  React.ElementRef<typeof Button>,
+  React.ComponentProps<typeof Button>
+>(({ className, onClick, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar();
+
+  return (
+    <Button
+      className={cn("h-7 w-7", className)}
+      data-sidebar="trigger"
+      onClick={(event) => {
+        onClick?.(event);
+        toggleSidebar();
+      }}
+      ref={ref}
+      size="icon"
+      variant="ghost"
+      {...props}
+    >
+      <LayoutDashboard />
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
+  );
+});
+
+SidebarTriggerMobile.displayName = "SidebarTriggerMobile";
 
 const SidebarRail = React.forwardRef<
   HTMLButtonElement,
@@ -807,5 +834,6 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  SidebarTriggerMobile,
   useSidebar,
 };

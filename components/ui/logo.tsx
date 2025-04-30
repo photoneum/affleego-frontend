@@ -16,9 +16,15 @@ const logoVariants = cva("", {
     variant: "default",
   },
 });
-const Logo = ({ variant }: { variant: "default" | "sm" | "lg" | "xl" }) => {
+const Logo = ({
+  variant,
+  className,
+}: {
+  variant: "default" | "sm" | "lg" | "xl";
+  className?: string;
+}) => {
   return (
-    <div className={logoVariants({ variant })}>
+    <div className={logoVariants({ variant, className })}>
       <Image alt="Affleego Logo" src={AffleegoLogo} />
     </div>
   );
