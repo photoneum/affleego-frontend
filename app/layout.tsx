@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Affleego - Ultimate Platform for High-Paying CPA",
   description: "The best CPA network for high-paying offers",
   icons: {
-    icon: "/img/favicon.ico",
+    icon: "/images/favicon.ico",
   },
   openGraph: {
     title: "Affleego - Ultimate Platform for High-Paying CPA",

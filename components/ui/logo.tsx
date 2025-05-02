@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import AffleegoLogo from "@/public/img/png/AffleegoLogo.png";
+import AffleegoLogo from "@/public/images/AffleegoLogo.png";
 import { cva } from "class-variance-authority";
 
 const logoVariants = cva("", {

@@ -89,6 +89,7 @@ const config = [
       "prefer-const": "error",
       "prefer-destructuring": "error",
       "prefer-object-spread": "warn",
+      "padding-line-between-statements": "off",
 
       "sort-keys": [
         "off",
@@ -111,7 +112,7 @@ const config = [
         },
       ],
       "react/jsx-sort-props": [
-        "warn",
+        "off",
         {
           ignoreCase: true,
         },
