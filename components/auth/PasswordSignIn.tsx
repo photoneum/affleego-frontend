@@ -55,7 +55,7 @@ function PasswordSignIn() {
             Forgot your password?
           </Link>
           <Button
-            className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-lg font-medium text-zinc-950 [&_svg]:size-5 md:[&_svg]:size-6"
+            className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
             type="submit"
           >
             {isSubmitting ? (
@@ -78,7 +78,7 @@ function PasswordSignIn() {
               </svg>
             ) : (
               <>
-                <span className="inline-flex items-center justify-center text-lg">
+                <span className="inline-flex items-center justify-center text-[1rem]">
                   Sign in
                 </span>
                 <FaCircleArrowRight className="ml-1" size={30} />
