@@ -10,7 +10,7 @@ type Props = {
   mode:
     | "signup"
     | "forgot_password"
-    | "update_password"
+    | "reset_password"
     | "email_signin"
     | "onboarding";
 };
@@ -22,8 +22,8 @@ function AuthUIWrapper({ children, mode }: Props) {
         return "Sign Up";
       case "forgot_password":
         return "Forgot your password?";
-      case "update_password":
-        return "Update Password";
+      case "reset_password":
+        return "Modify your password";
       case "email_signin":
         return "Sign In";
       case "onboarding":
@@ -39,8 +39,8 @@ function AuthUIWrapper({ children, mode }: Props) {
         return "Don't have an account?";
       case "forgot_password":
         return "Enter your email address and we will send a Reset Link";
-      case "update_password":
-        return "Don't have an account?";
+      case "reset_password":
+        return "Update your password";
       case "email_signin":
         return "Don't have an account?";
       case "onboarding":
