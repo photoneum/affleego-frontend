@@ -4,15 +4,14 @@ import AuthUIWrapper from "@/components/auth/AuthUIWrapper";
 import PasswordReset from "@/components/auth/PasswordReset";
 
 type Props = {
-  params: {
-    token: string;
-  };
+  params: Promise<{ token: string }>;
 };
 
-function PasswordResetWithTokenPage({ params }: Props) {
+async function PasswordResetWithTokenPage({ params }: Props) {
+  const { token } = await params;
   return (
     <AuthUIWrapper mode="reset_password">
-      <PasswordReset token={params.token} />
+      <PasswordReset token={token} />
     </AuthUIWrapper>
   );
 }

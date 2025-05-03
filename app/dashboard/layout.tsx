@@ -17,13 +17,14 @@ import {
   SidebarTriggerMobile,
 } from "@/components/ui/sidebar";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { segment?: string };
+  params: Promise<{ segment?: string }>;
 }) {
+  const { segment } = await params;
   const PageNamesMap: Record<string, string> = {
     dashboard: "Dashboard",
     settings: "Settings",
@@ -31,7 +32,7 @@ export default function DashboardLayout({
     account: "Account",
   };
 
-  const currentSegment = params.segment || "dashboard";
+  const currentSegment = segment || "dashboard";
   const pageName =
     PageNamesMap[currentSegment as keyof typeof PageNamesMap] ||
     "Page Not Found";
