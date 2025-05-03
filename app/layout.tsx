@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { Space_Grotesk } from "next/font/google";
 
+import { ReactQueryClientProvider } from "@/providers/query-client";
+
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -46,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` ${spaceGrotesk.className} antialiased`}>
-        {children}
+        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
       </body>
     </html>
   );
