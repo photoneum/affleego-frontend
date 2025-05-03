@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
@@ -28,10 +28,12 @@ import { UserOnboardingSchema } from "@/lib/validations/UserOnboarding";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import AccountCreatedSuccess from "./AccountCreatedSuccess";
 
 type UserOnboardingFormFields = z.infer<typeof UserOnboardingSchema>;
 
 function UserOnboarding() {
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
   const heardFromOptions = [
     { label: "Social Media", value: "social_media" },
     { label: "Search Engine", value: "search_engine" },
@@ -54,7 +56,12 @@ function UserOnboarding() {
 
   const onSubmit = (data: UserOnboardingFormFields) => {
     console.log(data);
+    setIsOnboardingComplete(true);
   };
+
+  if (isOnboardingComplete) {
+    return <AccountCreatedSuccess />;
+  }
 
   return (
     <Form {...form}>

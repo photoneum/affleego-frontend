@@ -16,10 +16,10 @@ function AuthLayout({ children }: Props) {
     <div className="min-h-screen w-full bg-zinc-950">
       {/* Back navigation - show on all screen sizes */}
       <div className="container mx-auto px-5 pt-10 lg:px-6">
-        <Link className="w-fit text-white" href="/dashboard">
+        <Link className="w-fit text-white" href="https://affleego.com">
           <div className="flex w-fit items-center justify-center">
             <FaChevronLeft className="mr-3 h-[13px] w-[8px] text-white" />
-            <p className="ml-0 text-sm text-white">Back to the dashboard</p>
+            <p className="ml-0 text-sm text-white">Back to website</p>
           </div>
         </Link>
       </div>

@@ -59,12 +59,14 @@ function AuthUIWrapper({ children, mode }: Props) {
         </p>
         <span className="inline-flex flex-row flex-wrap items-center gap-2 text-sm text-white">
           {renderSubtitle()}
-          <Link
-            className="text-yellow-400"
-            href={mode === "email_signin" ? "/auth/signup" : "/auth/login"}
-          >
-            {mode === "email_signin" ? "Create an account" : "Sign In"}
-          </Link>
+          {mode !== "onboarding" && (
+            <Link
+              className="text-yellow-400"
+              href={mode === "email_signin" ? "/auth/signup" : "/auth/login"}
+            >
+              {mode === "email_signin" ? "Create an account" : "Sign In"}
+            </Link>
+          )}
         </span>
       </div>
       {children}
