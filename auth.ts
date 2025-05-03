@@ -1,0 +1,31 @@
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+import { http } from "@/lib/http";
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  session: {
+    strategy: "jwt",
+  },
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials.email || !credentials.password) {
+          return null;
+        }
+        const { email, password } = credentials;
+        const response = await http.post("/auth/login", {
+          email,
+          password,
+        });
+        console.log("🚀 ~ authorize ~ response data:", response.data);
+        return response.data;
+      },
+    }),
+  ],
+});

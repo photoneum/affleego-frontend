@@ -18,6 +18,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import usePasswordSignIn from "@/hooks/mutations/usePasswordSignIn";
+
 import { PasswordSignInSchema } from "@/lib/validations/PasswordSignIn";
 
 import { Button } from "../ui/button";
@@ -37,8 +39,11 @@ function PasswordSignIn() {
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: PasswordSignInFormFields) => {
-    console.log(data);
+  const { mutateAsync, isPending } = usePasswordSignIn();
+
+  const onSubmit = async (data: PasswordSignInFormFields) => {
+    const response = await mutateAsync(data);
+    console.log("🚀 ~ onSubmit ~ response:", response);
   };
 
   return (
@@ -100,7 +105,8 @@ function PasswordSignIn() {
           </Link>
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-            // isLoading={isSubmitting}
+            disabled={isPending}
+            isLoading={isPending}
             type="submit"
           >
             <span className="inline-flex items-center justify-center text-[1rem]">

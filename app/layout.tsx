@@ -4,6 +4,8 @@ import { Space_Grotesk } from "next/font/google";
 
 import { ReactQueryClientProvider } from "@/providers/query-client";
 
+import { Toaster } from "@/components/ui/sonner";
+
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -48,7 +50,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` ${spaceGrotesk.className} antialiased`}>
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        <ReactQueryClientProvider>
+          <main>{children}</main>
+          <Toaster position="top-right" />
+        </ReactQueryClientProvider>
       </body>
     </html>
   );
