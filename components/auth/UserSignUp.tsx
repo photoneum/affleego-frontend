@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
@@ -23,10 +23,12 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { InputPassword } from "../ui/input-password";
+import UserEmailVerification from "./UserEmailVerification";
 
 type UserSignUpFormFields = z.infer<typeof UserSignUpSchema>;
 
 function UserSignUp() {
+  const [isSignupSuccess, setIsSignupSuccess] = useState(false);
   const initialValues: UserSignUpFormFields = {
     fullName: "",
     phoneNumber: "",
@@ -42,7 +44,12 @@ function UserSignUp() {
 
   const onSubmit = (data: UserSignUpFormFields) => {
     console.log(data);
+    setIsSignupSuccess(true);
   };
+
+  if (isSignupSuccess) {
+    return <UserEmailVerification email={form.getValues("email")} />;
+  }
 
   return (
     <Form {...form}>
