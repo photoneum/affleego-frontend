@@ -18,15 +18,12 @@ function UserEmailVerification({ email }: Props) {
     // Different platforms need different approaches
 
     if (isAndroid()) {
-      alert("Android");
       // For Android
-      window.location.href = "content://com.android.email/";
+      window.location.href = "https://gmail.app.goo.gl";
     } else if (isIOS()) {
-      alert("iOS");
       // For iOS
       window.location.href = "message://";
     } else {
-      alert("Desktop");
       // Fallback for desktop
       window.location.href = "mailto:";
     }
