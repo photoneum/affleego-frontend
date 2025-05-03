@@ -19,7 +19,7 @@ function AuthUIWrapper({ children, mode }: Props) {
   const renderTitle = () => {
     switch (mode) {
       case "signup":
-        return "Sign Up";
+        return "Let's get you started";
       case "forgot_password":
         return "Forgot your password?";
       case "reset_password":
@@ -36,7 +36,7 @@ function AuthUIWrapper({ children, mode }: Props) {
   const renderSubtitle = () => {
     switch (mode) {
       case "signup":
-        return "Don't have an account?";
+        return "Already have an account?";
       case "forgot_password":
         return "Enter your email address and we will send a Reset Link";
       case "reset_password":
@@ -57,7 +57,7 @@ function AuthUIWrapper({ children, mode }: Props) {
         <p className="text-[28px] font-medium text-white md:text-[36px]">
           {renderTitle()}
         </p>
-        <span className="inline-flex flex-col items-start gap-2 text-sm text-white md:flex-row md:items-center">
+        <span className="inline-flex flex-row flex-wrap items-center gap-2 text-sm text-white">
           {renderSubtitle()}
           <Link
             className="text-yellow-400"
