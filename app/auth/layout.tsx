@@ -51,7 +51,7 @@ function AuthLayout({ children }: Props) {
         </div>
 
         {/* Children content (now on the right) - centered on mobile */}
-        <div className="flex items-center justify-center px-5 py-10 lg:py-0">
+        <div className="flex items-center justify-center p-3 md:p-10 lg:py-0">
           <div className="w-full max-w-lg">{children}</div>
         </div>
       </div>

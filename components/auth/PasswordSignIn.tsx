@@ -95,7 +95,7 @@ function PasswordSignIn() {
             />
             <Link
               className="text-right text-sm text-yellow-400"
-              href="/dashboard/signin/forgot_password"
+              href="/auth/forgot-password"
             >
               Forgot your password?
             </Link>
@@ -115,7 +115,7 @@ function PasswordSignIn() {
       <p>
         <Link
           className="text-sm font-medium text-zinc-950 dark:text-white"
-          href="/dashboard/signin/forgot_password"
+          href="/auth/forgot-password"
         >
           Forgot your password?
         </Link>

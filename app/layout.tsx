@@ -10,6 +10,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://affleego.com"),
   title: "Affleego - Ultimate Platform for High-Paying CPA",
   description: "The best CPA network for high-paying offers",
   icons: {

@@ -21,7 +21,7 @@ function AuthUIWrapper({ children, mode }: Props) {
       case "signup":
         return "Sign Up";
       case "forgot_password":
-        return "Forgot Password";
+        return "Forgot your password?";
       case "update_password":
         return "Update Password";
       case "email_signin":
@@ -38,24 +38,26 @@ function AuthUIWrapper({ children, mode }: Props) {
       case "signup":
         return "Don't have an account?";
       case "forgot_password":
-        return "Already have an account?";
+        return "Enter your email address and we will send a Reset Link";
       case "update_password":
         return "Don't have an account?";
       case "email_signin":
         return "Don't have an account?";
       case "onboarding":
-        return "One more thing, just tell us a little bit about your self";
+        return "One more thing, just tell us a little bit about yourself";
       default:
         return "Don't have an account?";
     }
   };
 
   return (
-    <div className="my-auto rounded-3xl bg-[#11111A] px-8 py-6">
-      <div className="mb-3 flex flex-col items-start justify-start space-y-1">
+    <div className="my-auto rounded-3xl bg-[#11111A] px-3 py-2 md:px-8 md:py-6">
+      <div className="mb-5 flex flex-col items-start justify-start space-y-1 md:mb-10">
         <Image alt="Affleego Logo" height={60} src={Logo} width={60} />
-        <p className="text-[32px] font-medium text-white">{renderTitle()}</p>
-        <span className="inline-flex items-center gap-2 text-sm text-white">
+        <p className="text-[28px] font-medium text-white md:text-[36px]">
+          {renderTitle()}
+        </p>
+        <span className="inline-flex flex-col items-start gap-2 text-sm text-white md:flex-row md:items-center">
           {renderSubtitle()}
           <Link
             className="text-yellow-400"
