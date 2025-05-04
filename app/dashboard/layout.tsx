@@ -62,7 +62,7 @@ export default async function DashboardLayout({
             </Breadcrumb>
           </div>
           <div className="flex items-center gap-4 rounded-full p-4">
-            <SidebarTriggerMobile className="flex bg-white md:hidden" />
+            <SidebarTriggerMobile className="size-8 hover:bg-yellow-400 md:hidden [&_svg]:size-full [&_svg]:text-white [&_svg]:hover:text-black" />
             <div className="relative text-white transition-colors duration-200">
               <Bell className="size-6" />
               <span className="absolute -right-1 -top-1 flex size-2 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">

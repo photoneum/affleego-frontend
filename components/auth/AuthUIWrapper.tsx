@@ -53,7 +53,7 @@ function AuthUIWrapper({ children, mode }: Props) {
   };
 
   return (
-    <div className="my-auto rounded-3xl bg-[#11111A] px-3 py-2 md:px-8 md:py-6">
+    <div className="my-auto rounded-3xl bg-[#11111A] px-6 py-4 md:px-8 md:py-6">
       <div className="mb-5 flex flex-col items-start justify-start space-y-1 md:mb-10">
         <Image alt="Affleego Logo" height={60} src={Logo} width={60} />
         <p className="text-[28px] font-medium text-white md:text-[36px]">

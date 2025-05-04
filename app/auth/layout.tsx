@@ -14,8 +14,18 @@ type Props = {
 function AuthLayout({ children }: Props) {
   return (
     <div className="min-h-screen w-full bg-zinc-950">
+      {/* Background Image - visible on all screens with lower opacity on mobile */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          alt="Authentication Background"
+          className="block object-cover opacity-20 lg:hidden"
+          fill
+          priority
+          src={AuthBgImage}
+        />
+      </div>
       {/* Back navigation - show on all screen sizes */}
-      <div className="container mx-auto px-5 pt-10 lg:px-6">
+      <div className="container relative z-10 mx-auto px-5 pt-10 lg:px-6">
         <Link className="w-fit text-white" href="https://affleego.com">
           <div className="flex w-fit items-center justify-center">
             <FaChevronLeft className="mr-3 h-[13px] w-[8px] text-white" />
@@ -52,7 +62,7 @@ function AuthLayout({ children }: Props) {
 
         {/* Children content (now on the right) - centered on mobile */}
         <div className="flex items-center justify-center p-3 md:p-10 lg:py-0">
-          <div className="w-full max-w-lg">{children}</div>
+          <div className="z-10 w-full max-w-lg">{children}</div>
         </div>
       </div>
     </div>
