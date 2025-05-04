@@ -13,20 +13,20 @@ const handleAxiosError = (error: AxiosError<APIError>) => {
   // API returned an error response
   if (error.response) {
     const { status } = error.response;
-    const message = error.response.data?.message || "Unknown API error";
+    const message = error.response.data?.message;
 
     // Handle specific status codes
     if (status === 401) {
-      return "Authentication failed. Please log in again.";
+      return message || "Authentication failed. Please log in again.";
     } else if (status === 403) {
-      return "You do not have permission to perform this action.";
+      return message || "You do not have permission to perform this action.";
     } else if (status === 404) {
-      return "The requested resource was not found.";
+      return message || "The requested resource was not found.";
     } else if (status >= 500) {
-      return "Server error. Please try again later.";
+      return message || "Server error. Please try again later.";
     }
 
-    return message;
+    return "Unknown API error";
   }
 
   // Request was made but no response received (network error)

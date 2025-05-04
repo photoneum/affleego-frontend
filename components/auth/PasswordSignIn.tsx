@@ -39,11 +39,10 @@ function PasswordSignIn() {
     defaultValues: initialValues,
   });
 
-  const { mutateAsync, isPending } = usePasswordSignIn();
+  const mutation = usePasswordSignIn();
 
   const onSubmit = async (data: PasswordSignInFormFields) => {
-    const response = await mutateAsync(data);
-    console.log("🚀 ~ onSubmit ~ response:", response);
+    await mutation.mutateAsync(data);
   };
 
   return (
@@ -105,8 +104,8 @@ function PasswordSignIn() {
           </Link>
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-            disabled={isPending}
-            isLoading={isPending}
+            disabled={mutation.isPending}
+            isLoading={mutation.isPending}
             type="submit"
           >
             <span className="inline-flex items-center justify-center text-[1rem]">

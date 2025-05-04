@@ -27,8 +27,10 @@ function usePasswordSignIn() {
         router.push("/dashboard");
       }
     },
-    onError: () => {
-      toast.error("Failed to sign in. Please try again.");
+    onError: (error) => {
+      const errorMessage =
+        error.message || "Failed to sign in. Please try again.";
+      toast.error(errorMessage);
     },
   });
 

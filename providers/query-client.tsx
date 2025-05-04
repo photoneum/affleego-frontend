@@ -26,7 +26,6 @@ let browserQueryClient: QueryClient | null = null;
 function getQueryClient() {
   if (isServer) {
     // In server, we are always creating new object because, we don't want to dehydrate all the data (from other requests) inside Query Client
-    // console.log("SSR");
     return createQueryClient();
   } else {
     // Using the same client, to access the cached data between Client Components

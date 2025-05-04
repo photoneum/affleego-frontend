@@ -12,7 +12,6 @@ export async function passwordSignIn(email: string, password: string) {
 
     return undefined;
   } catch (error) {
-    // console.log("🚀 ~ passwordSignIn ~ error:", error);
     throw error;
   }
 }
