@@ -39,7 +39,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // response.data contains access token, refresh token, and user data
           return response.data;
         } catch (error) {
-          throw new CustomAuthError(error as string);
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          throw new CustomAuthError(errorMessage);
         }
       },
     }),
