@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { MdSpaceDashboard } from "react-icons/md";
 
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
-import { LayoutDashboard, PanelLeft } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -320,7 +321,7 @@ const SidebarTriggerMobile = React.forwardRef<
 
   return (
     <Button
-      className={cn("h-7 w-7", className)}
+      className={cn("size-7", className)}
       data-sidebar="trigger"
       onClick={(event) => {
         onClick?.(event);
@@ -331,7 +332,7 @@ const SidebarTriggerMobile = React.forwardRef<
       variant="ghost"
       {...props}
     >
-      <LayoutDashboard />
+      <MdSpaceDashboard size={40} />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

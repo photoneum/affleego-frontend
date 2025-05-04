@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import Logo from "@/public/images/AffleegoLogo.png";
 
+import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "@/lib/constants";
+
 type Props = {
   children: React.ReactNode;
   mode:
@@ -51,7 +53,7 @@ function AuthUIWrapper({ children, mode }: Props) {
   };
 
   return (
-    <div className="my-auto rounded-3xl bg-[#11111A] px-3 py-2 md:px-8 md:py-6">
+    <div className="my-auto rounded-3xl bg-[#11111A] px-6 py-4 md:px-8 md:py-6">
       <div className="mb-5 flex flex-col items-start justify-start space-y-1 md:mb-10">
         <Image alt="Affleego Logo" height={60} src={Logo} width={60} />
         <p className="text-[28px] font-medium text-white md:text-[36px]">
@@ -62,7 +64,7 @@ function AuthUIWrapper({ children, mode }: Props) {
           {mode !== "onboarding" && (
             <Link
               className="text-yellow-400"
-              href={mode === "email_signin" ? "/auth/signup" : "/auth/login"}
+              href={mode === "email_signin" ? SIGN_UP_ROUTE : SIGN_IN_ROUTE}
             >
               {mode === "email_signin" ? "Create an account" : "Sign In"}
             </Link>

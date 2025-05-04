@@ -1,8 +1,9 @@
+import { auth } from "@/auth";
 import { Separator } from "@radix-ui/react-separator";
 import { Bell } from "lucide-react";
 
 import { AppSidebar } from "@/components/app-sidebar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,6 +18,8 @@ import {
   SidebarTriggerMobile,
 } from "@/components/ui/sidebar";
 
+import { getInitials } from "@/lib/utils/avatar";
+
 export default async function DashboardLayout({
   children,
   params,
@@ -25,6 +28,8 @@ export default async function DashboardLayout({
   params: Promise<{ segment?: string }>;
 }) {
   const { segment } = await params;
+  const session = await auth();
+  const user = session?.user;
   const PageNamesMap: Record<string, string> = {
     dashboard: "Dashboard",
     settings: "Settings",
@@ -57,7 +62,7 @@ export default async function DashboardLayout({
             </Breadcrumb>
           </div>
           <div className="flex items-center gap-4 rounded-full p-4">
-            <SidebarTriggerMobile className="flex bg-white md:hidden" />
+            <SidebarTriggerMobile className="size-8 hover:bg-yellow-400 md:hidden [&_svg]:size-full [&_svg]:text-white [&_svg]:hover:text-black" />
             <div className="relative text-white transition-colors duration-200">
               <Bell className="size-6" />
               <span className="absolute -right-1 -top-1 flex size-2 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
@@ -66,9 +71,9 @@ export default async function DashboardLayout({
             </div>
 
             <Avatar>
-              {/* <AvatarImage src={userImage} alt={userName} /> */}
+              <AvatarImage src={user?.image_url} alt="User Avatar" />
               <AvatarFallback>
-                {"John Doe".slice(0, 2).toUpperCase()}
+                {getInitials(user?.first_name, user?.last_name)}
               </AvatarFallback>
             </Avatar>
           </div>

@@ -33,6 +33,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_NEXT_PUBLIC_API_BASE_URL: "https://api.affleego.com/api/v1/"
+          envkey_API_BASE_URL: "https://api.affleego.com/api/v1/"
           file_name: .env.production
           fail_on_empty: true
 
@@ -66,6 +67,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_NEXT_PUBLIC_API_BASE_URL: "https://api.affleego.com/api/v1/"
+          envkey_API_BASE_URL: "https://api.affleego.com/api/v1/"
           file_name: .env.production
           fail_on_empty: true
 
