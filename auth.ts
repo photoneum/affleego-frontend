@@ -38,15 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           // response.data contains access token, refresh token, and user data
           return response.data;
-           
         } catch (error) {
-          if (
-            error === "Your request couldn't be processed. Please try again."
-          ) {
-            throw new CustomAuthError(
-              "Due to multiple failed attempts, your account has been locked. Please try again later.",
-            );
-          }
           throw new CustomAuthError(error as string);
         }
       },

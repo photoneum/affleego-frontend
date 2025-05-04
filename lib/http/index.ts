@@ -3,9 +3,17 @@ import { env } from "@/env";
 import axios from "axios";
 import type { AxiosError } from "axios";
 
+// Define the possible formats for error detail
+type ErrorDetailField = string[];
+type ErrorDetailObject = Record<string, ErrorDetailField>;
+
+// Updated API error type structure
 type APIError = {
-  status: boolean;
+  state: string;
   message: string;
+  data?: {
+    detail: string | ErrorDetailObject;
+  };
 };
 
 // Enhanced function to handle Axios errors
@@ -13,7 +21,37 @@ const handleAxiosError = (error: AxiosError<APIError>) => {
   // API returned an error response
   if (error.response) {
     const { status } = error.response;
-    const message = error.response.data?.message;
+    const errorData = error.response.data;
+    const message = errorData?.message;
+
+    // Parse error details if available
+    if (errorData?.data?.detail) {
+      const { detail } = errorData.data;
+
+      // Case 1: detail is a string
+      if (typeof detail === "string") {
+        return detail;
+      }
+
+      // Case 2: detail is an object with field arrays
+      if (typeof detail === "object") {
+        // Get all error messages
+        const errorMessages: string[] = [];
+
+        for (const [field, errors] of Object.entries(detail)) {
+          if (errors.length > 0) {
+            // Format: "Field: Error message"
+            const fieldName = field.charAt(0).toUpperCase() + field.slice(1);
+            errorMessages.push(`${fieldName}: ${errors[0]}`);
+          }
+        }
+
+        // Join all errors with line breaks for readability
+        if (errorMessages.length > 0) {
+          return errorMessages.join("\n");
+        }
+      }
+    }
 
     // Handle specific status codes
     if (status === 401) {
@@ -26,7 +64,7 @@ const handleAxiosError = (error: AxiosError<APIError>) => {
       return message || "Server error. Please try again later.";
     }
 
-    return "Unknown API error";
+    return message || "Unknown API error";
   }
 
   // Request was made but no response received (network error)
