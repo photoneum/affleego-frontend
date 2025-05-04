@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Space_Grotesk } from "next/font/google";
 
+import NextAuthSessionProvider from "@/providers/next-auth-session";
 import { ReactQueryClientProvider } from "@/providers/query-client";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -51,8 +52,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={` ${spaceGrotesk.className} antialiased`}>
         <ReactQueryClientProvider>
-          <main>{children}</main>
-          <Toaster position="top-right" />
+          <NextAuthSessionProvider>
+            <main>{children}</main>
+            <Toaster position="top-right" />
+          </NextAuthSessionProvider>
         </ReactQueryClientProvider>
       </body>
     </html>

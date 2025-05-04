@@ -54,7 +54,7 @@ const createAxiosInstance = () => {
     async (config) => {
       const session = await auth();
       if (session) {
-        const token = session?.user?.accessToken;
+        const token = session?.access;
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;

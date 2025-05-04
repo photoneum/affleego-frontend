@@ -1,7 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { http } from "@/lib/http";
+
+import { CustomAuthUser } from "./types/next-auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -23,9 +25,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email,
           password,
         });
-        console.log("🚀 ~ authorize ~ response data:", response.data);
+
+        // response.data contains access token, refresh token, and user data
         return response.data;
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user: authResponse }) {
+      // Initial sign in
+      if (authResponse) {
+        const { user, access, refresh } = authResponse as Session;
+        token.user = user;
+        token.access = access;
+        token.refresh = refresh;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      //   @ts-expect-error: token.user is not typed
+      session.user = token.user as CustomAuthUser;
+      session.access = token.access as string;
+      session.refresh = token.refresh as string;
+      return session;
+    },
+  },
 });

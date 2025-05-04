@@ -4,15 +4,15 @@ import { signIn } from "@/auth";
 
 export async function passwordSignIn(email: string, password: string) {
   try {
-    const response = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    console.log("🚀 ~ passwordSignIn ~ response:", response);
 
-    return response;
+    return undefined;
   } catch (error) {
+    // console.log("🚀 ~ passwordSignIn ~ error:", error);
     throw error;
   }
 }
