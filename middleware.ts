@@ -14,6 +14,10 @@ const isProtectedRoute = createRouteMatcher(protectedRoutes);
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
   // Check if the path matches any protected route pattern
   if (isProtectedRoute(pathname)) {
     // Get the auth session
