@@ -1,6 +1,7 @@
 import NextAuth, { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { PASSWORD_SIGN_IN_ROUTE } from "@/lib/constants";
 import { http } from "@/lib/http";
 
 import { CustomAuthUser } from "./types/next-auth";
@@ -21,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
         const { email, password } = credentials;
-        const response = await http.post("/auth/login", {
+        const response = await http.post(PASSWORD_SIGN_IN_ROUTE, {
           email,
           password,
         });

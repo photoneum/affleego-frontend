@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import Logo from "@/public/images/AffleegoLogo.png";
 
+import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "@/lib/constants";
+
 type Props = {
   children: React.ReactNode;
   mode:
@@ -62,7 +64,7 @@ function AuthUIWrapper({ children, mode }: Props) {
           {mode !== "onboarding" && (
             <Link
               className="text-yellow-400"
-              href={mode === "email_signin" ? "/auth/signup" : "/auth/login"}
+              href={mode === "email_signin" ? SIGN_UP_ROUTE : SIGN_IN_ROUTE}
             >
               {mode === "email_signin" ? "Create an account" : "Sign In"}
             </Link>
