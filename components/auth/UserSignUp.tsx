@@ -17,6 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import useRegisterUser from "@/hooks/mutations/useRegisterUser";
+
 import { UserSignUpSchema } from "@/lib/validations/UserSignUp";
 
 import { Button } from "../ui/button";
@@ -42,9 +44,23 @@ function UserSignUp() {
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: UserSignUpFormFields) => {
-    console.log(data);
-    setIsSignupSuccess(true);
+  const mutation = useRegisterUser();
+
+  const onSubmit = async (data: UserSignUpFormFields) => {
+    await mutation.mutateAsync(
+      {
+        email: data.email,
+        password: data.password,
+        first_name: data.fullName,
+        last_name: data.fullName,
+        phone_number: data.phoneNumber,
+      },
+      {
+        onSuccess: () => {
+          setIsSignupSuccess(true);
+        },
+      },
+    );
   };
 
   if (isSignupSuccess) {

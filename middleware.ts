@@ -3,7 +3,7 @@ import { type NextRequest } from "next/server";
 
 import { auth } from "@/auth";
 
-import { SIGN_IN_ROUTE } from "@/lib/constants";
+import { SIGN_IN_PAGE_ROUTE } from "@/lib/constants";
 import { createRouteMatcher } from "@/lib/utils";
 
 const protectedRoutes = ["/dashboard(.*)"];
@@ -25,7 +25,7 @@ export default async function middleware(request: NextRequest) {
 
     // If no session exists, redirect to the login page
     if (!session) {
-      const loginUrl = new URL(SIGN_IN_ROUTE, request.url);
+      const loginUrl = new URL(SIGN_IN_PAGE_ROUTE, request.url);
       // Add the current path as a redirect parameter
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);

@@ -41,6 +41,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : String(error);
+
+          if (
+            errorMessage ===
+            "No active account found with the given credentials"
+          ) {
+            throw new CustomAuthError("Invalid login credentials");
+          }
+
           throw new CustomAuthError(errorMessage);
         }
       },

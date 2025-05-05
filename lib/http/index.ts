@@ -1,5 +1,9 @@
+import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
+
 import { auth } from "@/auth";
 import { env } from "@/env";
+import { isServer } from "@tanstack/react-query";
 import axios from "axios";
 import type { AxiosError } from "axios";
 
@@ -90,7 +94,16 @@ const createAxiosInstance = () => {
 
   instance.interceptors.request.use(
     async (config) => {
-      const session = await auth();
+      let session: Session | null = null;
+
+      if (isServer) {
+        session = await auth();
+      } else {
+        session = await getSession();
+      }
+
+      // console.log("🚀 ~ session:", session);
+
       if (session) {
         const token = session?.access;
         config.headers.Authorization = `Bearer ${token}`;

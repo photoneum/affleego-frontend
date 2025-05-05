@@ -16,8 +16,12 @@ function usePasswordSignIn() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const mutation = useMutation<void, Error, PasswordSignInFormFields>({
-    mutationFn: (payload: PasswordSignInFormFields) => {
-      return passwordSignIn(payload.email, payload.password);
+    mutationFn: async (payload: PasswordSignInFormFields) => {
+      const response = await passwordSignIn(payload.email, payload.password);
+
+      if (response?.code === "invalid_credentials") {
+        throw new Error(response.message);
+      }
     },
     onSuccess: () => {
       toast.success("Signed in successfully");
