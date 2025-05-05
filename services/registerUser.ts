@@ -8,7 +8,6 @@ export const registerUser = async (payload: UserRegistrationRequest) => {
     const response = await http.post(SIGN_UP_ROUTE, payload);
     return response.data;
   } catch (e) {
-    console.log("🚀 ~ registerUser ~ e:", e);
     throw new Error(e as string);
   }
 };
