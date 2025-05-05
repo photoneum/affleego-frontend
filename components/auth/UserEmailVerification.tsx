@@ -19,7 +19,10 @@ function UserEmailVerification({ email }: Props) {
 
     if (isAndroid()) {
       // For Android
-      window.location.href = "https://gmail.app.goo.gl";
+      // window.location.href = "intent://#Intent;scheme=googlegmail;package=com.google.android.gm;end";
+      // window.location.href = "gmailapp://";
+      // window.location.href = "googlegmail://";
+      window.location.href = "https://mail.google.com/";
     } else if (isIOS()) {
       // For iOS
       window.location.href = "message://";
@@ -40,9 +43,7 @@ function UserEmailVerification({ email }: Props) {
         />
       </div>
       <h2 className="text-4xl font-medium text-white">Verify it&apos;s you!</h2>
-      <p className="text-xl text-white">
-        You’re just one step away! Verify your Email to unlock
-      </p>
+      <p className="text-xl text-white">You’re just one step away!</p>
       <p className="text-sm text-white">
         We have sent a Verification link to {email}. If you have not received
         the verification link, please check your “Spam” or “Junk” folder.
