@@ -25,7 +25,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
   return (
     <div
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl bg-gray-900 p-6 text-white transition-all duration-300 hover:shadow-lg hover:shadow-gray-800/30",
+        "group relative flex flex-col overflow-hidden rounded-xl border-[#343B4F] bg-gray-900 p-6 text-white transition-all duration-300 hover:shadow-lg hover:shadow-gray-800/30",
         className,
       )}
     >
@@ -40,7 +40,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
       </div>
 
       <div className="mt-auto flex items-end justify-between">
-        <div className="flex flex-col">
+        <div className="flex flex-row space-x-2">
           <span className="text-4xl font-bold tracking-tight">{value}</span>
           {change && (
             <div className="mt-1 flex items-center">

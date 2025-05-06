@@ -2,7 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 
-import VerificationEmailSent from "@/public/images/VerificationEmailSent.png";
+import MessageInfo from "@/public/images/MessageInfo.png";
 import { Inbox } from "lucide-react";
 
 import { isAndroid, isIOS } from "@/lib/utils";
@@ -38,7 +38,7 @@ function UserEmailVerification({ email }: Props) {
         <Image
           alt="Verification Email Sent"
           height={180}
-          src={VerificationEmailSent}
+          src={MessageInfo}
           width={180}
         />
       </div>
