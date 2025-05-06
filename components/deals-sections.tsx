@@ -16,9 +16,9 @@ function NoDeals() {
     <div className="mx-auto flex w-full flex-col items-center justify-center space-y-4 rounded-md bg-[#11111A] py-8 sm:py-12 md:py-16">
       <Image
         alt="Verification Email Sent"
-        height={180}
+        height={120}
         src={MessageInfo}
-        width={180}
+        width={120}
       />
 
       <h2 className="text-xl font-medium text-white sm:text-2xl md:text-3xl">
