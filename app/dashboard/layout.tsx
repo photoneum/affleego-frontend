@@ -3,6 +3,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { Bell } from "lucide-react";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { NavHeader } from "@/components/nav-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -65,9 +66,7 @@ export default async function DashboardLayout({
             <SidebarTriggerMobile className="size-8 hover:bg-yellow-400 md:hidden [&_svg]:size-full [&_svg]:text-white [&_svg]:hover:text-black" />
             <div className="relative text-white transition-colors duration-200">
               <Bell className="size-6" />
-              <span className="absolute -right-1 -top-1 flex size-2 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-                3
-              </span>
+              <span className="absolute -right-1 -top-1 flex size-2 items-center justify-center rounded-full bg-primary text-[10px] text-white" />
             </div>
 
             <Avatar>
@@ -76,6 +75,7 @@ export default async function DashboardLayout({
                 {getInitials(user?.first_name, user?.last_name)}
               </AvatarFallback>
             </Avatar>
+            <NavHeader />
           </div>
         </header>
         {children}
