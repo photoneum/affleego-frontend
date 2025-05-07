@@ -12,6 +12,7 @@ type Props = {
   mode:
     | "signup"
     | "forgot_password"
+    | "verify_account"
     | "reset_password"
     | "email_signin"
     | "onboarding";
@@ -30,6 +31,8 @@ function AuthUIWrapper({ children, mode }: Props) {
         return "Sign In";
       case "onboarding":
         return "More about yourself...";
+      case "verify_account":
+        return "Email verification";
       default:
         return "Sign In";
     }
@@ -47,6 +50,8 @@ function AuthUIWrapper({ children, mode }: Props) {
         return "Don't have an account?";
       case "onboarding":
         return "One more thing, just tell us a little bit about yourself";
+      case "verify_account":
+        return "Let's verify your email";
       default:
         return "Don't have an account?";
     }
@@ -61,7 +66,7 @@ function AuthUIWrapper({ children, mode }: Props) {
         </p>
         <span className="inline-flex flex-row flex-wrap items-center gap-2 text-sm text-white">
           {renderSubtitle()}
-          {mode !== "onboarding" && (
+          {mode !== "onboarding" && mode !== "verify_account" && (
             <Link
               className="text-yellow-400"
               href={

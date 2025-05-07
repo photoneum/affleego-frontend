@@ -47,12 +47,13 @@ function UserSignUp() {
   const mutation = useRegisterUser();
 
   const onSubmit = async (data: UserSignUpFormFields) => {
+    const names = data.fullName.split(" ");
     await mutation.mutateAsync(
       {
         email: data.email,
         password: data.password,
-        first_name: data.fullName,
-        last_name: data.fullName,
+        first_name: names[0] || "",
+        last_name: names[1] || "",
         phone_number: data.phoneNumber,
       },
       {
@@ -193,7 +194,7 @@ function UserSignUp() {
 
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-            // isLoading={isSubmitting}
+            isLoading={mutation.isPending}
             type="submit"
           >
             <span className="inline-flex items-center justify-center text-[1rem]">

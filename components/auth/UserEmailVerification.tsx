@@ -5,7 +5,7 @@ import Image from "next/image";
 import MessageInfo from "@/public/images/MessageInfo.png";
 import { Inbox } from "lucide-react";
 
-import { isAndroid, isIOS } from "@/lib/utils";
+import openMailApp from "@/lib/utils/openMail";
 
 import { Button } from "../ui/button";
 
@@ -14,24 +14,6 @@ type Props = {
 };
 
 function UserEmailVerification({ email }: Props) {
-  const openMailApp = () => {
-    // Different platforms need different approaches
-
-    if (isAndroid()) {
-      // For Android
-      // window.location.href = "intent://#Intent;scheme=googlegmail;package=com.google.android.gm;end";
-      // window.location.href = "gmailapp://";
-      // window.location.href = "googlegmail://";
-      window.location.href = "https://mail.google.com/";
-    } else if (isIOS()) {
-      // For iOS
-      window.location.href = "message://";
-    } else {
-      // Fallback for desktop
-      window.location.href = "mailto:";
-    }
-  };
-
   return (
     <div className="flex flex-col items-start justify-center space-y-4">
       <div className="mx-auto my-6 flex flex-col items-center justify-center">

@@ -4,8 +4,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
+import Image from "next/image";
+
+import MessageInfo from "@/public/images/MessageInfo.png";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail } from "lucide-react";
+import { Inbox, Mail } from "lucide-react";
 import { z } from "zod";
 
 import {
@@ -16,6 +19,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import useInitiatePasswordReset from "@/hooks/mutations/useInitiatePasswordReset";
+
+import openMailApp from "@/lib/utils/openMail";
 import { InitiatePasswordResetSchema } from "@/lib/validations/InitiatePasswordReset";
 
 import { Button } from "../ui/button";
@@ -30,14 +36,51 @@ function InitiatePasswordReset() {
     email: "",
   };
 
+  const mutation = useInitiatePasswordReset();
+
   const form = useForm<InitiatePasswordResetFormFields>({
     resolver: zodResolver(InitiatePasswordResetSchema),
     defaultValues: initialValues,
   });
 
+  const email = form.watch("email");
+
   const onSubmit = (data: InitiatePasswordResetFormFields) => {
-    console.log(data);
+    mutation.mutate(data);
   };
+
+  if (mutation.isSuccess) {
+    return (
+      <div className="flex flex-col items-start justify-center space-y-4">
+        <div className="mx-auto my-6 flex flex-col items-center justify-center">
+          <Image
+            alt="Verification Email Sent"
+            height={180}
+            src={MessageInfo}
+            width={180}
+          />
+        </div>
+        <h2 className="text-4xl font-medium text-white">
+          Password reset initiated!
+        </h2>
+        <p className="text-sm text-white">
+          We have sent a password reset link to {email}. If you have not
+          received the password reset link, please check your “Spam” or “Junk”
+          folder.
+        </p>
+        <Button
+          onClick={openMailApp}
+          className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
+          type="button"
+        >
+          <Inbox className="mr-1" size={30} />
+          <span className="inline-flex items-center justify-center text-[1rem]">
+            Open mail app
+          </span>
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <Form {...form}>
@@ -71,7 +114,7 @@ function InitiatePasswordReset() {
 
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-            // isLoading={isSubmitting}
+            isLoading={mutation.isPending}
             type="submit"
           >
             <span className="inline-flex items-center justify-center text-[1rem]">
