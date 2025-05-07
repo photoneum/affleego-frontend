@@ -10,3 +10,5 @@ export type UserRegistrationRequest =
   components["schemas"]["UserRegistrationRequest"];
 export type UserRegistration = components["schemas"]["UserRegistration"];
 export type VerificationRequest = components["schemas"]["VerificationRequest"];
+export type ResendVerificationCodeRequest =
+  components["schemas"]["ResendVerificationCodeRequest"];

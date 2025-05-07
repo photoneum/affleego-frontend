@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/api/v1/auth/login": {
+  "/api/v1/auth/login/": {
     parameters: {
       query?: never;
       header?: never;
@@ -42,7 +42,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/auth/password-reset": {
+  "/api/v1/auth/password-reset/": {
     parameters: {
       query?: never;
       header?: never;
@@ -62,7 +62,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/auth/password-reset/confirm": {
+  "/api/v1/auth/password-reset/confirm/": {
     parameters: {
       query?: never;
       header?: never;
@@ -96,6 +96,26 @@ export interface paths {
      * @description Register a new user account
      */
     post: operations["auth_register_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/auth/resend-verification-code": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Resend Verification Code
+     * @description Resend verification code
+     */
+    post: operations["auth_resend_verification_code_create"];
     delete?: never;
     options?: never;
     head?: never;
@@ -136,6 +156,10 @@ export interface components {
       password: string;
     };
     PasswordResetRequestRequest: {
+      /** Format: email */
+      email: string;
+    };
+    ResendVerificationCodeRequest: {
       /** Format: email */
       email: string;
     };
@@ -310,6 +334,30 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["UserRegistration"];
         };
+      };
+    };
+  };
+  auth_resend_verification_code_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ResendVerificationCodeRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["ResendVerificationCodeRequest"];
+        "multipart/form-data": components["schemas"]["ResendVerificationCodeRequest"];
+      };
+    };
+    responses: {
+      /** @description No response body */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };

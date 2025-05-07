@@ -13,7 +13,9 @@ import {
   SendHorizontal,
   TriangleAlert,
 } from "lucide-react";
+import { toast } from "sonner";
 
+import useResendVerificationEmail from "@/hooks/mutations/useResendVerificationEmail";
 import useVerifyEmail from "@/hooks/mutations/useVerifyEmail";
 
 import { SIGN_IN_PAGE_ROUTE } from "@/lib/constants";
@@ -24,7 +26,8 @@ function VerifyUserEmail() {
   const router = useRouter();
   const hasInitiatedVerification = useRef(false);
   const searchParams = useSearchParams();
-  const mutation = useVerifyEmail();
+  const verifyEmailMutation = useVerifyEmail();
+  const resendVerificationEmailMutation = useResendVerificationEmail();
 
   // Get the email and code from URL parameters
   const email = searchParams.get("email");
@@ -33,19 +36,30 @@ function VerifyUserEmail() {
   useEffect(() => {
     if (email && code && !hasInitiatedVerification.current) {
       hasInitiatedVerification.current = true;
-      mutation.mutate({ email, code });
+      verifyEmailMutation.mutate({ email, code });
     }
-  }, [email, code, mutation]);
+  }, [email, code, verifyEmailMutation]);
 
   useEffect(() => {
-    if (mutation.isSuccess) {
+    if (verifyEmailMutation.isSuccess) {
       setTimeout(() => {
         router.push(SIGN_IN_PAGE_ROUTE);
       }, 2000);
     }
-  }, [mutation.isSuccess, router]);
+  }, [verifyEmailMutation.isSuccess, router]);
 
-  if (mutation.isPending) {
+  const handleResendVerificationEmail = () => {
+    if (email) {
+      resendVerificationEmailMutation.mutate({ email });
+    } else {
+      toast.error("Email not found. Redirecting to sign in page");
+      setTimeout(() => {
+        router.push(SIGN_IN_PAGE_ROUTE);
+      }, 2000);
+    }
+  };
+
+  if (verifyEmailMutation.isPending) {
     return (
       <div className="flex w-full flex-col items-start justify-center space-y-4 text-white">
         <Loader2 size={35} className="animate-spin" />
@@ -54,7 +68,7 @@ function VerifyUserEmail() {
     );
   }
 
-  if (mutation.isSuccess) {
+  if (verifyEmailMutation.isSuccess) {
     return (
       <div className="flex w-full flex-col items-start justify-center space-y-4 text-white">
         <CheckCircle size={35} />
@@ -72,16 +86,22 @@ function VerifyUserEmail() {
     );
   }
 
-  if (mutation.isError) {
+  if (verifyEmailMutation.isError) {
     return (
       <div className="flex w-full flex-col items-start justify-center space-y-4 text-white">
         <TriangleAlert className="text-red-500" size={35} />
         <p>Account verification failed. Please try again.</p>
         <p>
           Reason:{" "}
-          <span className="text-yellow-500">{mutation.error?.message}</span>
+          <span className="text-yellow-500">
+            {verifyEmailMutation.error?.message}
+          </span>
         </p>
-        <Button className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5">
+        <Button
+          isLoading={resendVerificationEmailMutation.isPending}
+          className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
+          onClick={handleResendVerificationEmail}
+        >
           <span className="inline-flex items-center justify-center text-[1rem]">
             Resend verification email
           </span>
@@ -95,7 +115,11 @@ function VerifyUserEmail() {
     <div className="flex w-full flex-col items-start justify-center space-y-4 text-white">
       <OctagonAlert className="text-red-500" size={35} />
       <p>Something went wrong. Please try again.</p>
-      <Button className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5">
+      <Button
+        isLoading={resendVerificationEmailMutation.isPending}
+        className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
+        onClick={handleResendVerificationEmail}
+      >
         <span className="inline-flex items-center justify-center text-[1rem]">
           Resend verification email
         </span>

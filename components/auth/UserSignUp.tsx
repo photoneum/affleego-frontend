@@ -47,12 +47,13 @@ function UserSignUp() {
   const mutation = useRegisterUser();
 
   const onSubmit = async (data: UserSignUpFormFields) => {
+    const names = data.fullName.split(" ");
     await mutation.mutateAsync(
       {
         email: data.email,
         password: data.password,
-        first_name: data.fullName,
-        last_name: data.fullName,
+        first_name: names[0] || "",
+        last_name: names[1] || "",
         phone_number: data.phoneNumber,
       },
       {
