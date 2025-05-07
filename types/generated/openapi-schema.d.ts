@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/api/v1/auth/login/": {
+  "/api/v1/auth/login": {
     parameters: {
       query?: never;
       header?: never;
@@ -42,7 +42,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/auth/password-reset/": {
+  "/api/v1/auth/password-reset": {
     parameters: {
       query?: never;
       header?: never;
@@ -62,7 +62,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/auth/password-reset/confirm/": {
+  "/api/v1/auth/password-reset/confirm": {
     parameters: {
       query?: never;
       header?: never;
@@ -153,6 +153,7 @@ export interface components {
     PasswordResetConfirmRequest: {
       /** Format: email */
       email: string;
+      code: string;
       password: string;
     };
     PasswordResetRequestRequest: {
