@@ -2,47 +2,52 @@
 
 import React from "react";
 
-import { Calendar, Clock, Copy, DollarSign, PercentCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+import { Calendar, Clock, Copy, PercentCircle } from "lucide-react";
+
+import { DealDetailResponse } from "@/types/generated";
 
 import { TagBadge } from "../atoms/tag-badge";
 import { MetricDisplay } from "../molecules/metric-display";
 import { Button } from "../ui/button";
 
-export interface DealsCardProps {
-  id?: number;
-  title: string;
+export interface DealsCardProps extends Omit<DealDetailResponse, "uuid"> {
   label?: string;
-  requirements: string;
-  paymentMethods: string[];
-  projectedPayout: string;
-  conversionRate: string;
-  cpaRate: string;
-  lastUpdated: string;
-  onCopyLink?: () => void;
 }
 
 export const DealsCard: React.FC<DealsCardProps> = ({
-  title,
+  name,
   requirements,
-  paymentMethods,
-  projectedPayout,
-  conversionRate,
-  cpaRate,
-  lastUpdated,
-  onCopyLink,
+  keywords,
+  referral_link,
+  projected_payout,
+  revenue_share,
+  payout_schedule,
+  commission_type,
   label = "Secure the deal",
 }) => {
+  const router = useRouter();
+  const handleReferralLink = () => {
+    router.push(referral_link);
+  };
+
   return (
     <div className="mx-auto w-full max-w-lg rounded-xl bg-[#11111A] p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="space-y-4">
         <div>
-          <h3 className="mb-1 text-xl font-semibold">{title}</h3>
-          <p className="text-sm text-gray-400">{requirements}</p>
+          <h3 className="mb-1 text-xl font-semibold">{name}</h3>
+          {requirements && (
+            <p className="text-sm text-gray-400">{requirements}</p>
+          )}
+          {commission_type && (
+            <p className="text-sm text-gray-400">{commission_type}</p>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {paymentMethods.map((method) => (
-            <TagBadge key={method} label={method} />
+          {keywords.map((keyword) => (
+            <TagBadge key={keyword} label={keyword} />
           ))}
         </div>
 
@@ -50,29 +55,29 @@ export const DealsCard: React.FC<DealsCardProps> = ({
           <MetricDisplay
             icon={<Calendar size={20} />}
             label="Projected Payout"
-            value={projectedPayout}
+            value={projected_payout}
           />
 
           <MetricDisplay
             icon={<PercentCircle size={20} />}
-            label="Conversion Rate"
-            value={conversionRate}
+            label="Revenue Share"
+            value={revenue_share}
           />
 
-          <MetricDisplay
+          {/* <MetricDisplay
             icon={<DollarSign size={20} />}
             label="CPA Rate"
-            value={cpaRate}
-          />
+            value={cpa_rate}
+          /> */}
 
           <MetricDisplay
             icon={<Clock size={20} />}
-            label="Last Updated"
-            value={lastUpdated}
+            label="Payout Schedule"
+            value={payout_schedule}
           />
         </div>
 
-        <Button variant="cta" onClick={onCopyLink}>
+        <Button variant="cta" onClick={handleReferralLink}>
           <Copy size={40} />
           {label}
         </Button>

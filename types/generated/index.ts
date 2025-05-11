@@ -18,3 +18,4 @@ export type PasswordResetConfirmRequest =
   components["schemas"]["PasswordResetConfirmRequest"];
 export type UserOnboardingRequest =
   components["schemas"]["UserOnboardingRequest"];
+export type DealDetailResponse = components["schemas"]["DealDetailResponse"];

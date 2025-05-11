@@ -8,7 +8,9 @@ import { useRouter } from "next/navigation";
 import MessageInfo from "@/public/images/MessageInfo.png";
 import { Tags } from "lucide-react";
 
-import { DealsCard, DealsCardProps } from "./organisms/deals-card";
+import { DealDetailResponse } from "@/types/generated";
+
+import { DealsCard } from "./organisms/deals-card";
 import { Button } from "./ui/button";
 
 export function NoDeals() {
@@ -32,15 +34,15 @@ export function NoDeals() {
 }
 
 type Props = {
-  deals: DealsCardProps[];
+  deals: DealDetailResponse[] | undefined;
 };
 
 function DealsSection({ deals }: Props) {
   const router = useRouter();
-  const handleCopyLink = (id?: number) => {
-    console.log(`Copied tracking link for product ${id}`);
-    // In a real app, would copy link to clipboard
-  };
+
+  if (!deals) {
+    return <NoDeals />;
+  }
 
   const renderDeals = () => {
     if (deals.length === 0) {
@@ -51,15 +53,15 @@ function DealsSection({ deals }: Props) {
       <div className="grid grid-cols-1 justify-between md:grid-cols-2 md:gap-10">
         {deals.map((deal) => (
           <DealsCard
-            key={deal.id}
-            title={deal.title}
+            key={deal.uuid}
+            name={deal.name}
             requirements={deal.requirements}
-            paymentMethods={deal.paymentMethods}
-            projectedPayout={deal.projectedPayout}
-            conversionRate={deal.conversionRate}
-            cpaRate={deal.cpaRate}
-            lastUpdated={deal.lastUpdated}
-            onCopyLink={() => handleCopyLink(deal.id)}
+            keywords={deal.keywords}
+            projected_payout={deal.projected_payout}
+            revenue_share={deal.revenue_share}
+            payout_schedule={deal.payout_schedule}
+            commission_type={deal.commission_type}
+            referral_link={deal.referral_link}
           />
         ))}
       </div>

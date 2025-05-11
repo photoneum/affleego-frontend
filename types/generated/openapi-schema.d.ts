@@ -142,6 +142,70 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/deals": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List Deals
+     * @description List all available deals
+     */
+    get: operations["deals_list"];
+    put?: never;
+    /** @description ViewSet for managing deals. */
+    post: operations["deals_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/deals/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Deal
+     * @description Get detailed information about a specific deal
+     */
+    get: operations["deals_retrieve"];
+    /** @description ViewSet for managing deals. */
+    put: operations["deals_update"];
+    post?: never;
+    /** @description ViewSet for managing deals. */
+    delete: operations["deals_destroy"];
+    options?: never;
+    head?: never;
+    /** @description ViewSet for managing deals. */
+    patch: operations["deals_partial_update"];
+    trace?: never;
+  };
+  "/api/v1/deals/featured": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Featured Deals
+     * @description List featured deals
+     */
+    get: operations["deals_featured_list"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -149,6 +213,48 @@ export interface components {
     CustomTokenObtainPairRequest: {
       email: string;
       password: string;
+    };
+    /** @description Serializer for detailed Deal representation. */
+    DealDetailResponse: {
+      /** Format: uuid */
+      readonly uuid: string;
+      name: string;
+      /** @description The requirements for the deal */
+      requirements?: string;
+      /** @description The commission type for the deal */
+      commission_type?: string;
+      /** @description The projected payout for the deal */
+      projected_payout?: string;
+      /** @description The revenue share for the deal */
+      revenue_share?: string;
+      /** @description The payout schedule for the deal */
+      payout_schedule?: string;
+      status?: components["schemas"]["StatusEnum"];
+      is_featured?: boolean;
+      /** Format: uri */
+      referral_link: string;
+      description?: string;
+      /** @description Convert comma-separated keywords to a list. */
+      readonly keywords: string[];
+    };
+    /** @description Serializer for detailed Deal representation. */
+    DealDetailResponseRequest: {
+      name: string;
+      /** @description The requirements for the deal */
+      requirements?: string;
+      /** @description The commission type for the deal */
+      commission_type?: string;
+      /** @description The projected payout for the deal */
+      projected_payout?: string;
+      /** @description The revenue share for the deal */
+      revenue_share?: string;
+      /** @description The payout schedule for the deal */
+      payout_schedule?: string;
+      status?: components["schemas"]["StatusEnum"];
+      is_featured?: boolean;
+      /** Format: uri */
+      referral_link: string;
+      description?: string;
     };
     PasswordResetConfirmRequest: {
       /** Format: email */
@@ -160,18 +266,41 @@ export interface components {
       /** Format: email */
       email: string;
     };
+    /** @description Serializer for detailed Deal representation. */
+    PatchedDealDetailResponseRequest: {
+      name?: string;
+      /** @description The requirements for the deal */
+      requirements?: string;
+      /** @description The commission type for the deal */
+      commission_type?: string;
+      /** @description The projected payout for the deal */
+      projected_payout?: string;
+      /** @description The revenue share for the deal */
+      revenue_share?: string;
+      /** @description The payout schedule for the deal */
+      payout_schedule?: string;
+      status?: components["schemas"]["StatusEnum"];
+      is_featured?: boolean;
+      /** Format: uri */
+      referral_link?: string;
+      description?: string;
+    };
     ResendVerificationCodeRequest: {
       /** Format: email */
       email: string;
     };
+    /**
+     * @description * `open` - Open
+     *     * `closed` - Closed
+     * @enum {string}
+     */
+    StatusEnum: "open" | "closed";
     UserOnboarding: {
-      /** Format: email */
-      user_email: string;
       brand_name: string;
       /** Format: uri */
       website?: string;
       /** @description List of marketing methods used by the user */
-      marketing_methods?: string | null;
+      marketing_methods?: string;
       heard_from: string;
       feedback_message?: string;
     };
@@ -182,7 +311,7 @@ export interface components {
       /** Format: uri */
       website?: string;
       /** @description List of marketing methods used by the user */
-      marketing_methods?: string | null;
+      marketing_methods?: string;
       heard_from: string;
       feedback_message?: string;
     };
@@ -389,6 +518,168 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  deals_list: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"][];
+        };
+      };
+    };
+  };
+  deals_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DealDetailResponseRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["DealDetailResponseRequest"];
+        "multipart/form-data": components["schemas"]["DealDetailResponseRequest"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"];
+        };
+      };
+    };
+  };
+  deals_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"];
+        };
+      };
+    };
+  };
+  deals_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DealDetailResponseRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["DealDetailResponseRequest"];
+        "multipart/form-data": components["schemas"]["DealDetailResponseRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"];
+        };
+      };
+    };
+  };
+  deals_destroy: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description No response body */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  deals_partial_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["PatchedDealDetailResponseRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["PatchedDealDetailResponseRequest"];
+        "multipart/form-data": components["schemas"]["PatchedDealDetailResponseRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"];
+        };
+      };
+    };
+  };
+  deals_featured_list: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealDetailResponse"][];
+        };
       };
     };
   };
