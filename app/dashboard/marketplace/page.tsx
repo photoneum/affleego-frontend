@@ -3,10 +3,10 @@
 import React from "react";
 
 import DashboardPageHeader from "@/components/dashboard-page-header";
-import { TradeInfoCard } from "@/components/organisms/trade-info-card";
+import { DealsCard, DealsCardProps } from "@/components/organisms/deals-card";
 import SearchHeader from "@/components/search-header";
 
-const tradeData = [
+const dealsData: DealsCardProps[] = [
   {
     id: 1,
     title: "TradePro FX",
@@ -100,8 +100,8 @@ function MarketplacePage() {
       <SearchHeader />
       <h2 className="mb-4 text-xl font-semibold">Featured Deals</h2>
       <div className="grid grid-cols-1 justify-between md:grid-cols-3 md:gap-10">
-        {tradeData.map((trade) => (
-          <TradeInfoCard
+        {dealsData.map((trade) => (
+          <DealsCard
             key={trade.id}
             title={trade.title}
             label="Apply Now"
@@ -111,6 +111,7 @@ function MarketplacePage() {
             conversionRate={trade.conversionRate}
             cpaRate={trade.cpaRate}
             lastUpdated={trade.lastUpdated}
+            // eslint-disable-next-line no-empty-function
             onCopyLink={() => {}}
           />
         ))}

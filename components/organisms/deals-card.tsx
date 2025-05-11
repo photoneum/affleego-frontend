@@ -8,7 +8,8 @@ import { TagBadge } from "../atoms/tag-badge";
 import { MetricDisplay } from "../molecules/metric-display";
 import { Button } from "../ui/button";
 
-interface TradeInfoCardProps {
+export interface DealsCardProps {
+  id?: number;
   title: string;
   label?: string;
   requirements: string;
@@ -17,10 +18,10 @@ interface TradeInfoCardProps {
   conversionRate: string;
   cpaRate: string;
   lastUpdated: string;
-  onCopyLink: () => void;
+  onCopyLink?: () => void;
 }
 
-export const TradeInfoCard: React.FC<TradeInfoCardProps> = ({
+export const DealsCard: React.FC<DealsCardProps> = ({
   title,
   requirements,
   paymentMethods,
