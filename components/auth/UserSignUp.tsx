@@ -25,6 +25,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { InputPassword } from "../ui/input-password";
+import { ClientOnly } from "./ClientOnly";
 import TermsAndConditions from "./TermsAndConditions";
 import UserEmailVerification from "./UserEmailVerification";
 
@@ -217,10 +218,12 @@ function UserSignUp() {
           </div>
         </form>
       </Form>
-      <TermsAndConditions
-        open={isTermsAndConditionsOpen}
-        setOpen={setIsTermsAndConditionsOpen}
-      />
+      <ClientOnly>
+        <TermsAndConditions
+          open={isTermsAndConditionsOpen}
+          setOpen={setIsTermsAndConditionsOpen}
+        />
+      </ClientOnly>
     </>
   );
 }
