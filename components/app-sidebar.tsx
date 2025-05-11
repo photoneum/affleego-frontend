@@ -46,7 +46,7 @@ const navigationItems = [
     icon: MessageSquare,
   },
   {
-    title: "Learn and Club",
+    title: "Learn & Club Hub",
     url: "/dashboard/learn-and-club",
     icon: BookOpenCheck,
   },

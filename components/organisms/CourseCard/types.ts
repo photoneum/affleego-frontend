@@ -9,10 +9,4 @@ export interface CourseCardProps {
   category: string;
   originalPrice: number;
   currentPrice: number;
-  instructor: Instructor;
-  rating: number;
-  reviews: number;
-  modules: number;
-  duration: string;
-  lessons: number;
 }

@@ -30,7 +30,7 @@ export const DealsCard: React.FC<DealsCardProps> = ({
   cpaRate,
   lastUpdated,
   onCopyLink,
-  label = "Copy Tracking Link",
+  label = "Secure the deal",
 }) => {
   return (
     <div className="mx-auto w-full max-w-lg rounded-xl bg-[#11111A] p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl">

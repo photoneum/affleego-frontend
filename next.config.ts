@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "images.pexels.com",
       },
+      {
+        hostname: "framerusercontent.com",
+      },
     ],
   },
 };

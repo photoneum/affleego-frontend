@@ -1,58 +1,83 @@
 import React from "react";
 
+import { CheckCircleIcon } from "lucide-react";
+
 import DashboardPageHeader from "@/components/dashboard-page-header";
 import CourseCard from "@/components/organisms/CourseCard";
 
 function LearningHubPage() {
-  const courses = [
-    {
-      title: "Best Practices for CPA & RevShare Deals",
-      image:
-        "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      category: "Development",
-      originalPrice: 29.0,
-      currentPrice: 9.0,
-      instructor: {
-        name: "David Millar",
-        avatar:
-          "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      },
-      rating: 4.8,
-      reviews: 32,
-      modules: 5,
-      duration: "11h 20m",
-      lessons: 22,
+  const course = {
+    title: "Learn & Club",
+    image:
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    category: "Learn",
+    originalPrice: 59.0,
+    currentPrice: 20.0,
+    instructor: {
+      name: "DChessking",
+      avatar:
+        "https://framerusercontent.com/images/G8XWO7gOxhJHaKYnUAFtQZeH1jM.jpeg?scale-down-to=1024",
     },
-    {
-      title: "Non-Payment Issues in Affiliate Marketing",
-      image:
-        "https://images.pexels.com/photos/7681091/pexels-photo-7681091.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      category: "Business",
-      originalPrice: 24.99,
-      currentPrice: 12.99,
-      instructor: {
-        name: "Sarah Chen",
-        avatar:
-          "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      },
-      rating: 4.6,
-      reviews: 28,
-      modules: 4,
-      duration: "8h 45m",
-      lessons: 18,
-    },
-  ];
+  };
+
   return (
-    <div className="container mx-auto flex flex-1 flex-col space-y-8 p-4 pt-0 text-white md:px-10 md:py-4">
+    <div className="container mx-auto flex flex-1 flex-col space-y-6 p-4 pt-0 text-white md:space-y-8 md:px-10 md:py-4">
       <DashboardPageHeader
         type="page-header"
         title="Explore Our World's Best Courses"
         description="Master Affiliate Marketing with Affleego"
       />
-      <div className="grid grid-cols-1 justify-between md:grid-cols-2 md:gap-10">
-        {courses.map((course, index) => (
-          <CourseCard key={index} {...course} />
-        ))}
+      <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-between md:space-x-5 lg:gap-10">
+        <div className="flex w-full flex-col items-start justify-center space-y-2 text-white md:w-1/2 lg:w-2/5">
+          <h3 className="text-2xl font-bold sm:text-3xl">Learn & Club</h3>
+          <span className="text-sm text-gray-400 sm:text-base">
+            Powered by Bluwigo x Affleego
+          </span>
+          <p className="text-sm sm:text-base">
+            Step into our private vault - built for performance marketers who
+            want to learn fast and earn faster.
+          </p>
+          <div className="w-full">
+            <span className="text-sm sm:text-base">
+              Inside, you&apos;ll get:
+            </span>
+            <ul className="mt-2 list-disc pl-5">
+              <li className="flex items-start gap-2">
+                <CheckCircleIcon className="mt-0.5 size-4 shrink-0" />
+                <span>
+                  Access to hidden CPA & RVS deals (up to $2,000 per lead)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircleIcon className="mt-0.5 size-4 shrink-0" />
+                <span>Plug-and-earn AI funnels used by top affliates</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircleIcon className="mt-0.5 size-4 shrink-0" />
+                <span>Weekly strategy sessions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircleIcon className="mt-0.5 size-4 shrink-0" />
+                <span>Updates directly from Bluwigo pros</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircleIcon className="mt-0.5 size-4 shrink-0" />
+                <span>
+                  Club member-only discounts on physical events & masterminds
+                </span>
+              </li>
+            </ul>
+          </div>
+          <p className="flex flex-col gap-1 text-sm sm:text-base">
+            <span>
+              One-time access: <b>$20 only</b>
+            </span>
+            <span>No subscriptions. No recurring fees. Just results.</span>
+          </p>
+        </div>
+        <div className="w-full md:w-1/2 lg:w-2/5">
+          <CourseCard {...course} />
+        </div>
       </div>
     </div>
   );

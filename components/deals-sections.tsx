@@ -3,6 +3,7 @@
 import React from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import MessageInfo from "@/public/images/MessageInfo.png";
 import { Tags } from "lucide-react";
@@ -35,6 +36,7 @@ type Props = {
 };
 
 function DealsSection({ deals }: Props) {
+  const router = useRouter();
   const handleCopyLink = (id?: number) => {
     console.log(`Copied tracking link for product ${id}`);
     // In a real app, would copy link to clipboard
@@ -68,7 +70,7 @@ function DealsSection({ deals }: Props) {
     <div className="flex flex-col space-y-3">
       <div className="flex flex-row items-center justify-between">
         <h2 className="mb-4 text-xl font-semibold">Deals</h2>
-        <Button variant="cta">
+        <Button onClick={() => router.push("/dashboard/deals")} variant="cta">
           <Tags size={40} />
           View All
         </Button>

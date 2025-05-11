@@ -1,8 +1,8 @@
 import Analytics from "@/components/analytics";
-import ComissionSection from "@/components/commissions-sections";
 import DashboardPageHeader from "@/components/dashboard-page-header";
 import DealsSection from "@/components/deals-sections";
 import { DealsCardProps } from "@/components/organisms/deals-card";
+import ComissionSection from "@/components/rewards-sections";
 
 const dealsData: DealsCardProps[] = [
   {
