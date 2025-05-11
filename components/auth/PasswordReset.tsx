@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
+
+import { useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyRound } from "lucide-react";
@@ -16,22 +18,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import useConfirmPasswordReset from "@/hooks/mutations/useConfirmPasswordReset";
+
 import { PasswordResetSchema } from "@/lib/validations/PasswordReset";
 
 import { Button } from "../ui/button";
 import { InputPassword } from "../ui/input-password";
+import PasswordResetSuccess from "./PasswordResetSuccess";
 
 type PasswordResetFormFields = z.infer<typeof PasswordResetSchema>;
 
-type Props = {
-  token: string;
-};
-
-function PasswordReset({ token }: Props) {
+function PasswordReset() {
   const initialValues: PasswordResetFormFields = {
     password: "",
     confirmPassword: "",
   };
+
+  const [isPasswordResetSuccess, setIsPasswordResetSuccess] = useState(false);
+
+  const mutation = useConfirmPasswordReset();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const code = searchParams.get("code");
 
   const form = useForm<PasswordResetFormFields>({
     resolver: zodResolver(PasswordResetSchema),
@@ -39,8 +47,23 @@ function PasswordReset({ token }: Props) {
   });
 
   const onSubmit = (data: PasswordResetFormFields) => {
-    console.log(data, token);
+    mutation.mutate(
+      {
+        password: data.password,
+        code: code as string,
+        email: email as string,
+      },
+      {
+        onSuccess: () => {
+          setIsPasswordResetSuccess(true);
+        },
+      },
+    );
   };
+
+  if (isPasswordResetSuccess) {
+    return <PasswordResetSuccess />;
+  }
 
   return (
     <Form {...form}>
@@ -90,7 +113,7 @@ function PasswordReset({ token }: Props) {
           />
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-            // isLoading={isSubmitting}
+            isLoading={mutation.isPending}
             type="submit"
           >
             <span className="inline-flex items-center justify-center text-[1rem]">
