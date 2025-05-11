@@ -42,7 +42,7 @@ const navigationItems = [
   },
   {
     title: "Forums",
-    url: "#",
+    url: "https://t.me/+NM9XBU8h7qFmYmI0",
     icon: MessageSquare,
   },
   {
