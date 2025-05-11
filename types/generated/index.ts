@@ -14,3 +14,5 @@ export type ResendVerificationCodeRequest =
   components["schemas"]["ResendVerificationCodeRequest"];
 export type PasswordResetRequestRequest =
   components["schemas"]["PasswordResetRequestRequest"];
+export type PasswordResetConfirmRequest =
+  components["schemas"]["PasswordResetConfirmRequest"];
