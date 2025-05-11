@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 
 interface TradeInfoCardProps {
   title: string;
+  label?: string;
   requirements: string;
   paymentMethods: string[];
   projectedPayout: string;
@@ -28,6 +29,7 @@ export const TradeInfoCard: React.FC<TradeInfoCardProps> = ({
   cpaRate,
   lastUpdated,
   onCopyLink,
+  label = "Copy Tracking Link",
 }) => {
   return (
     <div className="mx-auto w-full max-w-lg rounded-xl bg-[#11111A] p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -71,7 +73,7 @@ export const TradeInfoCard: React.FC<TradeInfoCardProps> = ({
 
         <Button variant="cta" onClick={onCopyLink}>
           <Copy size={40} />
-          Copy Tracking Link
+          {label}
         </Button>
       </div>
     </div>

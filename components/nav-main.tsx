@@ -2,6 +2,8 @@
 
 import { IconType } from "react-icons/lib";
 
+import { usePathname } from "next/navigation";
+
 import { type LucideIcon } from "lucide-react";
 
 import {
@@ -21,12 +23,18 @@ export function NavMain({
     isActive?: boolean;
   }[];
 }) {
+  const pathname = usePathname();
+  const currentPath = pathname.split("/").pop();
+  const isActive = (url: string) => currentPath === url.split("/").pop();
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem className="rounded-md" key={item.title}>
-            <SidebarMenuButton data-active={item.isActive} tooltip={item.title}>
+            <SidebarMenuButton
+              data-active={isActive(item.url) ?? item.isActive}
+              tooltip={item.title}
+            >
               {item.icon && <item.icon className="text-white" size={20} />}
               <a className="text-[1rem] text-white" href={item.url}>
                 {item.title}

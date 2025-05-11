@@ -26,18 +26,18 @@ import { UserAvatar } from "@/components/user-avatar";
 const navigationItems = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: LayoutDashboard,
     isActive: true,
   },
   {
     title: "Marketplace",
-    url: "#",
+    url: "/dashboard/marketplace",
     icon: Store,
   },
   {
     title: "Deals & Tracking",
-    url: "#",
+    url: "/dashboard/deals",
     icon: TbTargetArrow,
   },
   {
@@ -46,7 +46,7 @@ const navigationItems = [
     icon: MessageSquare,
   },
   {
-    title: "Learning hub",
+    title: "Learn and Club",
     url: "#",
     icon: BookOpenCheck,
   },
