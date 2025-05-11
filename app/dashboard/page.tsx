@@ -1,14 +1,15 @@
 import Analytics from "@/components/analytics";
-import ComissionSection from "@/components/commissions-sections";
-import DashboardWelcomeHeader from "@/components/dashboard-welcome-header";
-import DealsSection from "@/components/deals-sections";
+import DashboardPageHeader from "@/components/dashboard-page-header";
+import ComissionSection from "@/components/rewards-sections";
+
+import DealsWrapper from "./deals/deals-wrapper";
 
 export default function Page() {
   return (
     <div className="container mx-auto flex flex-1 flex-col space-y-8 p-4 pt-0 text-white md:px-10 md:py-4">
-      <DashboardWelcomeHeader />
+      <DashboardPageHeader type="welcome" />
       <Analytics />
-      <DealsSection />
+      <DealsWrapper />
       <ComissionSection />
     </div>
   );

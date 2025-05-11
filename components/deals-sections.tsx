@@ -3,15 +3,17 @@
 import React from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import MessageInfo from "@/public/images/MessageInfo.png";
 import { Tags } from "lucide-react";
 
-import { TradeInfoCard } from "./organisms/trade-info-card";
+import { DealDetailResponse } from "@/types/generated";
+
+import { DealsCard } from "./organisms/deals-card";
 import { Button } from "./ui/button";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function NoDeals() {
+export function NoDeals() {
   return (
     <div className="mx-auto flex w-full flex-col items-center justify-center space-y-4 rounded-md bg-[#11111A] py-8 sm:py-12 md:py-16">
       <Image
@@ -31,59 +33,51 @@ function NoDeals() {
   );
 }
 
-function DealsSection() {
-  const tradeData = [
-    {
-      id: 1,
-      title: "TradePro FX",
-      requirements: "FTD Requirements: Min. $250 deposit + 5 trades",
-      paymentMethods: ["Wire", "USDT", "Trading", "Hybrid"],
-      projectedPayout: "$5,400",
-      conversionRate: "8.5%",
-      cpaRate: "Up to $1,200",
-      lastUpdated: "2 hours ago",
-    },
-    {
-      id: 2,
-      title: "CryptoTrader Pro",
-      requirements: "FTD Requirements: Min. $250 deposit + 5 trades",
-      paymentMethods: ["Wire", "USDT", "Trading", "Hybrid"],
-      projectedPayout: "$5,400",
-      conversionRate: "8.5%",
-      cpaRate: "Up to $1,200",
-      lastUpdated: "2 hours ago",
-    },
-  ];
+type Props = {
+  deals: DealDetailResponse[] | undefined;
+};
 
-  const handleCopyLink = (id: number) => {
-    console.log(`Copied tracking link for product ${id}`);
-    // In a real app, would copy link to clipboard
+function DealsSection({ deals }: Props) {
+  const router = useRouter();
+
+  if (!deals) {
+    return <NoDeals />;
+  }
+
+  const renderDeals = () => {
+    if (deals.length === 0) {
+      return <NoDeals />;
+    }
+
+    return (
+      <div className="grid grid-cols-1 justify-between md:grid-cols-2 md:gap-10">
+        {deals.map((deal) => (
+          <DealsCard
+            key={deal.uuid}
+            name={deal.name}
+            requirements={deal.requirements}
+            keywords={deal.keywords}
+            projected_payout={deal.projected_payout}
+            revenue_share={deal.revenue_share}
+            payout_schedule={deal.payout_schedule}
+            commission_type={deal.commission_type}
+            referral_link={deal.referral_link}
+          />
+        ))}
+      </div>
+    );
   };
+
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex flex-row items-center justify-between">
         <h2 className="mb-4 text-xl font-semibold">Deals</h2>
-        <Button variant="cta">
+        <Button onClick={() => router.push("/dashboard/deals")} variant="cta">
           <Tags size={40} />
           View All
         </Button>
       </div>
-      {/* <NoDeals /> */}
-      <div className="grid grid-cols-1 justify-between md:grid-cols-2 md:gap-10">
-        {tradeData.map((trade) => (
-          <TradeInfoCard
-            key={trade.id}
-            title={trade.title}
-            requirements={trade.requirements}
-            paymentMethods={trade.paymentMethods}
-            projectedPayout={trade.projectedPayout}
-            conversionRate={trade.conversionRate}
-            cpaRate={trade.cpaRate}
-            lastUpdated={trade.lastUpdated}
-            onCopyLink={() => handleCopyLink(trade.id)}
-          />
-        ))}
-      </div>
+      {renderDeals()}
     </div>
   );
 }

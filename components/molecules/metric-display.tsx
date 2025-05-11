@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 interface MetricDisplayProps {
   icon: ReactNode;
   label: string;
-  value: string;
+  value?: string;
 }
 
 export const MetricDisplay: React.FC<MetricDisplayProps> = ({
@@ -11,6 +11,7 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
   label,
   value,
 }) => {
+  if (!value) return null;
   return (
     <div className="flex items-start space-x-3">
       <div className="shrink-0 rounded-full bg-[#2A2A3A] p-2 text-gray-400">

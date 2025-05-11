@@ -24,5 +24,10 @@ export const UserOnboardingSchema = z.object({
       message: "Please select how you heard about us",
     },
   ),
+  ftdsDeliverabilityPerMonth: z.coerce
+    .number()
+    .min(0, { message: "Please enter a valid number" }),
+  affliateExperience: z.string().min(1, { message: "Please select an option" }),
+  typeOfDealsWanted: z.string().min(1, { message: "Please select an option" }),
   feedbackMessage: z.string().max(500).optional(),
 });

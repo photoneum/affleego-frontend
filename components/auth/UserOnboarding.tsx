@@ -40,12 +40,34 @@ function UserOnboarding() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
+
   const heardFromOptions = [
     { label: "Social Media", value: "social_media" },
     { label: "Search Engine", value: "search_engine" },
     { label: "Friend Referral", value: "friend_referral" },
     { label: "Advertisement", value: "advertisement" },
     { label: "Other", value: "other" },
+  ];
+
+  const typeOfDealsWantedOptions = [
+    { label: "Forex CPA", value: "forex_cpa" },
+    { label: "Forex Revenue Share", value: "forex_revenue_share" },
+    { label: "Options", value: "options" },
+    { label: "Sport betting", value: "sport_betting" },
+    { label: "Casino", value: "casino" },
+    { label: "All", value: "all" },
+  ];
+
+  const affliateExperienceOptions = [
+    { label: "I am new to affiliate marketing", value: "new" },
+    {
+      label: "I have been in the affiliate marketing industry for a while",
+      value: "experienced",
+    },
+    {
+      label: "I am an expert in the affiliate marketing industry",
+      value: "expert",
+    },
   ];
 
   const mutation = useCollectUserOnboardingData();
@@ -56,6 +78,9 @@ function UserOnboarding() {
     heardFrom: "",
     marketingMethods: "",
     website: "",
+    ftdsDeliverabilityPerMonth: 0,
+    affliateExperience: "I am new to affiliate marketing",
+    typeOfDealsWanted: "forex_cpa",
   };
   const form = useForm<UserOnboardingFormFields>({
     resolver: zodResolver(UserOnboardingSchema),
@@ -71,6 +96,9 @@ function UserOnboarding() {
         heard_from: data.heardFrom,
         marketing_methods: data.marketingMethods,
         website: data.website,
+        ftds_deliverability_per_month: data.ftdsDeliverabilityPerMonth,
+        affliate_experience: data.affliateExperience,
+        type_of_deals_wanted: data.typeOfDealsWanted,
       },
       {
         onSuccess: () => {
@@ -136,6 +164,73 @@ function UserOnboarding() {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ftdsDeliverabilityPerMonth"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    How much FTDs can you deliver per month?
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="rounded-full p-4 md:p-6"
+                      placeholder="Enter your FTDs deliverability per month"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="typeOfDealsWanted"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type of deals wanted</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="rounded-full p-4 text-white md:p-6">
+                        <SelectValue placeholder="Select an option" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {typeOfDealsWantedOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="affliateExperience"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Affliate experience</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="rounded-full p-4 text-white md:p-6">
+                        <SelectValue placeholder="Select an option" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {affliateExperienceOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
