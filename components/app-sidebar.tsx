@@ -47,7 +47,7 @@ const navigationItems = [
   },
   {
     title: "Learn and Club",
-    url: "#",
+    url: "/dashboard/learn-and-club",
     icon: BookOpenCheck,
   },
   {
