@@ -303,6 +303,9 @@ export interface components {
       marketing_methods?: string;
       heard_from: string;
       feedback_message?: string;
+      ftds_deliverability_per_month?: number;
+      affliate_experience?: string;
+      type_of_deals_wanted?: string;
     };
     UserOnboardingRequest: {
       /** Format: email */
@@ -314,6 +317,9 @@ export interface components {
       marketing_methods?: string;
       heard_from: string;
       feedback_message?: string;
+      ftds_deliverability_per_month?: number;
+      affliate_experience?: string;
+      type_of_deals_wanted?: string;
     };
     UserRegistration: {
       /**
