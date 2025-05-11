@@ -33,6 +33,12 @@ function VerifyUserEmail() {
   const email = searchParams.get("email");
   const code = searchParams.get("code");
 
+  const onboardingRoute = "/auth/onboarding";
+  const query = new URLSearchParams({
+    email: email as string,
+  });
+  const destination = `${onboardingRoute}?${query.toString()}`;
+
   useEffect(() => {
     if (email && code && !hasInitiatedVerification.current) {
       hasInitiatedVerification.current = true;
@@ -43,10 +49,10 @@ function VerifyUserEmail() {
   useEffect(() => {
     if (verifyEmailMutation.isSuccess) {
       setTimeout(() => {
-        router.push(SIGN_IN_PAGE_ROUTE);
+        router.push(destination);
       }, 2000);
     }
-  }, [verifyEmailMutation.isSuccess, router]);
+  }, [verifyEmailMutation.isSuccess, router, destination]);
 
   const handleResendVerificationEmail = () => {
     if (email) {
@@ -75,10 +81,10 @@ function VerifyUserEmail() {
         <p>Your account has been verified. Redirecting you to the login page</p>
         <Link
           className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-4 text-[1rem] font-medium text-zinc-950 [&_svg]:size-4 md:[&_svg]:size-5"
-          href={SIGN_IN_PAGE_ROUTE}
+          href={destination}
         >
           <span className="inline-flex items-center justify-center text-[1rem]">
-            Go to login page
+            Go to onboarding
           </span>
           <FaCircleArrowRight className="ml-1" size={30} />
         </Link>

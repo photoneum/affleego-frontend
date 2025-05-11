@@ -165,18 +165,24 @@ export interface components {
       email: string;
     };
     UserOnboarding: {
+      /** Format: email */
+      user_email: string;
       brand_name: string;
       /** Format: uri */
       website?: string;
-      marketing_methods?: string[];
+      /** @description List of marketing methods used by the user */
+      marketing_methods?: string | null;
       heard_from: string;
       feedback_message?: string;
     };
     UserOnboardingRequest: {
+      /** Format: email */
+      user_email: string;
       brand_name: string;
       /** Format: uri */
       website?: string;
-      marketing_methods?: string[];
+      /** @description List of marketing methods used by the user */
+      marketing_methods?: string | null;
       heard_from: string;
       feedback_message?: string;
     };

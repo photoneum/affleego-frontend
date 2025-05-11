@@ -5,3 +5,4 @@ export const RESEND_VERIFICATION_CODE_ROUTE = "auth/resend-verification-code";
 
 export const INITIATE_PASSWORD_RESET_ROUTE = "/auth/password-reset";
 export const CONFIRM_PASSWORD_RESET_ROUTE = "/auth/password-reset/confirm";
+export const COLLECT_USER_ONBOARDING_DATA_ROUTE = "/auth/onboarding";

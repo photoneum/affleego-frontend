@@ -16,3 +16,5 @@ export type PasswordResetRequestRequest =
   components["schemas"]["PasswordResetRequestRequest"];
 export type PasswordResetConfirmRequest =
   components["schemas"]["PasswordResetConfirmRequest"];
+export type UserOnboardingRequest =
+  components["schemas"]["UserOnboardingRequest"];

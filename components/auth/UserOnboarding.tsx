@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
+import { useSearchParams } from "next/navigation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -23,6 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import useCollectUserOnboardingData from "@/hooks/mutations/useCollectUserOnboardingData";
+
 import { UserOnboardingSchema } from "@/lib/validations/UserOnboarding";
 
 import { Button } from "../ui/button";
@@ -33,6 +37,8 @@ import AccountCreatedSuccess from "./AccountCreatedSuccess";
 type UserOnboardingFormFields = z.infer<typeof UserOnboardingSchema>;
 
 function UserOnboarding() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
   const heardFromOptions = [
     { label: "Social Media", value: "social_media" },
@@ -41,6 +47,8 @@ function UserOnboarding() {
     { label: "Advertisement", value: "advertisement" },
     { label: "Other", value: "other" },
   ];
+
+  const mutation = useCollectUserOnboardingData();
 
   const initialValues: UserOnboardingFormFields = {
     brandName: "",
@@ -55,8 +63,21 @@ function UserOnboarding() {
   });
 
   const onSubmit = (data: UserOnboardingFormFields) => {
-    console.log(data);
-    setIsOnboardingComplete(true);
+    mutation.mutate(
+      {
+        user_email: email as string,
+        brand_name: data.brandName,
+        feedback_message: data.feedbackMessage,
+        heard_from: data.heardFrom,
+        marketing_methods: data.marketingMethods,
+        website: data.website,
+      },
+      {
+        onSuccess: () => {
+          setIsOnboardingComplete(true);
+        },
+      },
+    );
   };
 
   if (isOnboardingComplete) {
@@ -127,7 +148,7 @@ function UserOnboarding() {
                   <FormLabel>How did you hear about us?</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="rounded-full p-4 md:p-6">
+                      <SelectTrigger className="rounded-full p-4 text-white md:p-6">
                         <SelectValue placeholder="Select an option" />
                       </SelectTrigger>
                     </FormControl>
@@ -151,7 +172,7 @@ function UserOnboarding() {
                   <FormLabel>Feedback</FormLabel>
                   <FormControl>
                     <Textarea
-                      className="rounded-lg p-4 md:p-6"
+                      className="rounded-lg p-4 text-white md:p-6"
                       placeholder="Enter your feedback"
                       {...field}
                     />
@@ -163,6 +184,8 @@ function UserOnboarding() {
           </div>
           <Button
             className="mt-2 flex h-[unset] w-full items-center justify-center rounded-full bg-yellow-400 p-2 text-[1rem] font-medium text-zinc-950 md:p-4 [&_svg]:size-4 md:[&_svg]:size-5"
+            disabled={mutation.isPending}
+            isLoading={mutation.isPending}
             type="submit"
           >
             <span>Proceed</span>
