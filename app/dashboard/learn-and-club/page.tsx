@@ -1,5 +1,6 @@
 import React from "react";
 
+import LearnAndClub from "@/public/images/LearnAndClub.jpeg";
 import { CheckCircleIcon } from "lucide-react";
 
 import DashboardPageHeader from "@/components/dashboard-page-header";
@@ -8,8 +9,7 @@ import CourseCard from "@/components/organisms/CourseCard";
 function LearningHubPage() {
   const course = {
     title: "Learn & Club",
-    image:
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    image: LearnAndClub,
     category: "Learn",
     originalPrice: 59.0,
     currentPrice: 20.0,
@@ -24,8 +24,8 @@ function LearningHubPage() {
     <div className="container mx-auto flex flex-1 flex-col space-y-6 p-4 pt-0 text-white md:space-y-8 md:px-10 md:py-4">
       <DashboardPageHeader
         type="page-header"
-        title="Explore Our World's Best Courses"
-        description="Master Affiliate Marketing with Affleego"
+        title="Explore Our Community Hub"
+        description="Master Traffic Banking"
       />
       <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-between md:space-x-5 lg:gap-10">
         <div className="flex w-full flex-col items-start justify-center space-y-2 text-white md:w-1/2 lg:w-2/5">
@@ -73,6 +73,10 @@ function LearningHubPage() {
               One-time access: <b>$20 only</b>
             </span>
             <span>No subscriptions. No recurring fees. Just results.</span>
+            <span>
+              To unlock you club access, send a message to our team on Telegram
+              with the words: AFFLEEGO CLUB ACCESS
+            </span>
           </p>
         </div>
         <div className="w-full md:w-1/2 lg:w-2/5">

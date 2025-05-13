@@ -7,5 +7,7 @@ export const INITIATE_PASSWORD_RESET_ROUTE = "/auth/password-reset";
 export const CONFIRM_PASSWORD_RESET_ROUTE = "/auth/password-reset/confirm";
 export const COLLECT_USER_ONBOARDING_DATA_ROUTE = "/auth/onboarding";
 
+export const SEND_TG_NOTIFICATION_ROUTE = "/telegram/send_message";
+
 // Deals
 export const GET_DEALS_ROUTE = "/deals";

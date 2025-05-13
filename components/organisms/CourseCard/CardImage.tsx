@@ -1,9 +1,9 @@
 import React from "react";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface CardImageProps {
-  src: string;
+  src: StaticImageData | string;
   alt: string;
 }
 
