@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
+import useSendTgNotification from "@/hooks/mutations/useSendTgNotification";
+
 import CardImage from "./CardImage";
 import CategoryBadge from "./CategoryBadge";
 import PriceTag from "./PriceTag";
@@ -19,8 +21,9 @@ const CourseCard: React.FC<CourseCardProps> = ({
   currentPrice,
 }) => {
   const router = useRouter();
-
+  const mutation = useSendTgNotification();
   const handleUnlockClubAccess = () => {
+    mutation.mutateAsync();
     router.push("https://t.me/bluwigosupport");
   };
 
