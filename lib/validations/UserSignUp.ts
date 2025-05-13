@@ -1,8 +1,18 @@
 import { z } from "zod";
 
 export const UserSignUpSchema = z.object({
-  fullName: z.string().min(1, { message: "Full name is required" }),
-  phoneNumber: z.string().min(1, { message: "Phone number is required" }),
+  fullName: z
+    .string()
+    .min(3, { message: "Full name is required" })
+    .refine(
+      (data) =>
+        data
+          .split(" ")
+          .map((name) => name.trim())
+          .filter((name) => name.length > 0).length >= 2,
+      { message: "Full name must contain at least two words" },
+    ),
+  phoneNumber: z.string().min(3, { message: "Phone number is required" }),
   email: z.string().email(),
   password: z
     .string()
