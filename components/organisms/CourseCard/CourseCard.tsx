@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
@@ -14,6 +18,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
   originalPrice,
   currentPrice,
 }) => {
+  const router = useRouter();
+
+  const handleUnlockClubAccess = () => {
+    router.push("https://t.me/bluwigosupport");
+  };
+
   return (
     <div className="group w-full overflow-hidden rounded-2xl bg-gradient-to-b from-gray-900 to-black text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl md:w-[30rem]">
       <div className="relative">
@@ -30,8 +40,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <h2 className="mb-4 text-xl font-bold leading-tight transition-colors group-hover:text-yellow-300 md:text-2xl lg:text-3xl">
           {title}
         </h2>
-        <Button variant="cta" className="w-full hover:bg-yellow-500">
-          Enroll Now
+        <Button
+          variant="cta"
+          className="w-full hover:bg-yellow-500"
+          onClick={handleUnlockClubAccess}
+        >
+          Unlock Club Access
         </Button>
         <span className="text-sm text-gray-400">
           Click to unlock your spot instantly.
