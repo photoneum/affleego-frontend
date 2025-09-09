@@ -1,15 +1,23 @@
 import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 
 import { auth } from "@/auth";
 import { env } from "@/env";
 import { isServer } from "@tanstack/react-query";
 import axios from "axios";
-import type { AxiosError } from "axios";
+import type { AxiosError, InternalAxiosRequestConfig } from "axios";
+
+import { tokenRefresh } from "../actions/tokenRefresh";
 
 // Define the possible formats for error detail
 type ErrorDetailField = string[];
 type ErrorDetailObject = Record<string, ErrorDetailField>;
+
+// Extend Axios config to include retry flag
+// Extend Axios config to include retry count
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retryCount?: number;
+}
 
 // Updated API error type structure
 type APIError = {
@@ -102,8 +110,6 @@ const createAxiosInstance = () => {
         session = await getSession();
       }
 
-      // console.log("🚀 ~ session:", session);
-
       if (session) {
         const token = session?.access;
         config.headers.Authorization = `Bearer ${token}`;
@@ -115,7 +121,47 @@ const createAxiosInstance = () => {
 
   instance.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<APIError>) => Promise.reject(handleAxiosError(error)),
+    async (error: AxiosError<APIError>) => {
+      // Only handle 401 errors from API (not network errors)
+      const originalRequest = error.config as CustomAxiosRequestConfig;
+      if (
+        error.response?.status === 401 &&
+        originalRequest &&
+        typeof window !== "undefined"
+      ) {
+        // Initialize retry count if not set
+        if (!originalRequest._retryCount) {
+          originalRequest._retryCount = 0;
+        }
+
+        // Check if we haven't exceeded max retries (2 attempts)
+        if (originalRequest._retryCount < 2) {
+          originalRequest._retryCount++;
+
+          // Get session to access refresh token
+          const session = await getSession();
+          const refreshToken = session?.refresh;
+
+          if (refreshToken) {
+            const data = await tokenRefresh(refreshToken);
+            if (data?.access) {
+              // Set new access token in header and retry
+              originalRequest.headers = originalRequest.headers || {};
+              originalRequest.headers["Authorization"] =
+                `Bearer ${data.access}`;
+              return instance(originalRequest);
+            }
+          }
+        }
+
+        // If we've exceeded max retries or refresh fails, log out user
+        await signOut({ callbackUrl: "/auth/login" });
+        return Promise.reject(
+          "Session expired after multiple retry attempts. Please log in again.",
+        );
+      }
+      return Promise.reject(handleAxiosError(error));
+    },
   );
 
   return instance;

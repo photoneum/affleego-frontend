@@ -4,7 +4,11 @@ import { signIn } from "@/auth";
 
 type AuthError = {
   message: string;
-  code: "invalid_credentials" | "auth_error" | "server_error";
+  code:
+    | "invalid_credentials"
+    | "auth_error"
+    | "server_error"
+    | "token_refresh_failed";
 };
 
 export async function passwordSignIn(

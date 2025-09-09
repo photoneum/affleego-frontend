@@ -1,7 +1,11 @@
 import NextAuth, { AuthError, Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { PASSWORD_SIGN_IN_ROUTE } from "@/lib/constants";
+import { env } from "@/env";
+import axios from "axios";
+
+import { PASSWORD_SIGN_IN_ROUTE, TOKEN_REFRESH_ROUTE } from "@/lib/constants";
 import { http } from "@/lib/http";
 
 import { CustomAuthUser } from "./types/next-auth";
@@ -11,6 +15,29 @@ export class CustomAuthError extends AuthError {
     super();
     this.message = msg;
     this.stack = undefined;
+  }
+}
+
+async function refreshAccessToken(token: JWT): Promise<JWT> {
+  try {
+    const response = await axios.post<{ access: string }>(
+      `${env.NEXT_PUBLIC_API_BASE_URL}${TOKEN_REFRESH_ROUTE}`,
+      { refresh: token.refresh },
+      { headers: { "Content-Type": "application/json" } },
+    );
+    return {
+      ...token,
+      access: response.data.access,
+      accessTokenExpires: Date.now() + 30 * 60 * 1000, // 30 minutes
+    };
+  } catch (error) {
+    // Determine error type if possible
+    const errorMessage =
+      error instanceof Error ? error.message : "Token refresh failed";
+    return {
+      message: errorMessage,
+      code: "token_refresh_failed",
+    };
   }
 }
 
@@ -55,15 +82,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user: authResponse }) {
+    async jwt({ token, user: authResponse, account }) {
       // Initial sign in
       if (authResponse) {
         const { user, access, refresh } = authResponse as Session;
         token.user = user;
         token.access = access;
         token.refresh = refresh;
+        token.accessTokenExpires =
+          Date.now() + (account?.expires_in ?? 30 * 60) * 1000;
+
+        return token;
       }
-      return token;
+
+      // Return previous token if the access token has not expired yet
+      if (Date.now() < (token.accessTokenExpires as number)) {
+        return token;
+      }
+
+      // Access token has expired, try to update it
+      return refreshAccessToken(token);
     },
     async session({ session, token }) {
       //   @ts-expect-error: token.user is not typed
