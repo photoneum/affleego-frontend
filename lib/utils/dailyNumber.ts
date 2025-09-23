@@ -1,9 +1,9 @@
-function getDailyNumber() {
+function getDailyNumber(salt?: number) {
   const today = new Date();
   const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
 
-  // Create a simple hash from the date string
-  let hash = 0;
+  // Create a simple hash from the date string and salt
+  let hash = salt ?? 0;
   for (let i = 0; i < dateString.length; i++) {
     hash = (hash << 5) - hash + dateString.charCodeAt(i);
     hash |= 0; // Convert to 32bit integer

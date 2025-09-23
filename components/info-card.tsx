@@ -4,6 +4,10 @@ import { MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import InfoCardSkeleton from "./info-card-skeleton";
+
+// Import InfoCardSkeleton from atoms (assuming location)
+
 export interface InfoCardProps {
   title: string;
   value: string;
@@ -13,6 +17,7 @@ export interface InfoCardProps {
   };
   icon: React.ReactNode;
   className?: string;
+  isLoading?: boolean;
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({
@@ -21,7 +26,12 @@ const InfoCard: React.FC<InfoCardProps> = ({
   change,
   icon,
   className,
+  isLoading = false,
 }) => {
+  if (isLoading) {
+    return <InfoCardSkeleton />;
+  }
+
   return (
     <div
       className={cn(

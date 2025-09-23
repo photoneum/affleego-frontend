@@ -1,0 +1,56 @@
+---
+applyTo: "**"
+---
+
+# User Memory
+
+## User Preferences
+
+- Programming languages: TypeScript, JavaScript
+- Code style preferences: Prettier, double quotes, 2 spaces, trailing commas, PascalCase for components, kebab-case for files, camelCase for variables/functions
+- Development environment: Next.js 15, TanStack Query, shadcn/ui, Tailwind CSS, VS Code
+- Communication style: Concise, thorough, minimal repetition
+- Don't always run build to check code, use lint and type check first, unless I suspect build issues and request a build check
+- For Tanstack query and mutations hooks, put them in the /hooks and the nested /hooks/(queries or mutations) folders. Query functions should be in the services folder.
+- Any hook that is used in a page, that page should be marked as "use client", use client components should be minimized, use server components where possible.
+- Destructure import objects from React rather than importing the entire React object e.g. { useEffect, useState }.
+
+## Project Context
+
+- Current project type: Affiliate dashboard web app
+- Tech stack: Next.js 15 app router, TanStack Query, shadcn/ui, NextAuth, Tailwind CSS, CVA, OpenAPI contract-first
+- Architecture patterns: Atoms/molecules/organisms, hooks for data, app router pages
+- Key requirements: Responsive, accessible, type-safe, error handling with Sonner
+- Phase 1 (Core Dashboard Infrastructure) is fully implemented and validated
+- CommunityStats component refactored to use shadcn/ui Card, Lucide icons, color accents, bold/animated numbers (framer-motion), and accessibility/responsiveness
+- All lint and build errors resolved; type safety for stat config is robust
+
+## Coding Patterns
+
+- Preferred patterns and practices: Custom hooks for data, shadcn/ui for UI, CVA for variants, TanStack Query for API
+- Code organization preferences: Feature folders, hooks in /hooks, components in /components
+- Documentation style: Inline comments, OpenAPI types
+
+## Research History
+
+- Libraries or topics researched: TanStack Query, shadcn/ui, Next.js 15, OpenAPI integration, dashboard stat card UI best practices, framer-motion
+- Best practices discovered: Use generated types, error boundaries, toast notifications, stat cards with icons/color/animation
+- Implementation patterns used: Custom hooks, CVA, responsive design, stat card config with type-safe access
+- Version-specific findings: Next.js 15 app router, TanStack Query v5, shadcn/ui Card, framer-motion
+- Sonner toast should be imported from "sonner" package, not local UI
+
+## Conversation History
+
+- Important decisions made: Contract-first API, phased dashboard refactor, Sonner toast import fix, stat card UI/UX enhancement
+- Recurring questions or topics: API types, error handling, responsive UI, stat card best practices
+- Solutions that worked well: Custom hooks, shadcn/ui, Sonner toasts, TanStack Query for API, stat card config
+- Things to avoid or that didn't work: Placeholder logic, inconsistent error handling, incorrect Sonner import, use of `any` in stat config
+
+## Notes
+
+- Always use generated OpenAPI types for API responses
+- Ensure all dashboard features are responsive and accessible
+- Use Sonner for error notifications (import from "sonner")
+- Sidebar navigation must reflect new dashboard routes
+- Phase 1 is complete and ready for next phase
+- CommunityStats stat cards now visually "pop" and are fully accessible/responsive

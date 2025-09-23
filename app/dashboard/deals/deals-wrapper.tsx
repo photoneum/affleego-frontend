@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 
 import DealsSection from "@/components/deals-sections";
 
-import useGetDeals from "@/hooks/mutations/useGetDeals";
+import useGetDeals from "@/hooks/queries/useGetDeals";
 
 function DealsWrapper() {
   const { data, isLoading } = useGetDeals();
