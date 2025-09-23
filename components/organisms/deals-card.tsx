@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { Calendar, Clock, Copy, PercentCircle } from "lucide-react";
+import { toast } from "sonner";
+
+import useDealClick from "@/hooks/mutations/useDealClick";
+import useDealImpression from "@/hooks/mutations/useDealImpression";
 
 import { DealDetailResponse } from "@/types/generated";
 
@@ -13,10 +17,12 @@ import { MetricDisplay } from "../molecules/metric-display";
 import { Button } from "../ui/button";
 
 export interface DealsCardProps extends Omit<DealDetailResponse, "uuid"> {
+  uuid: string;
   label?: string;
 }
 
-export const DealsCard: React.FC<DealsCardProps> = ({
+export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
+  uuid,
   name,
   requirements,
   keywords,
@@ -28,8 +34,30 @@ export const DealsCard: React.FC<DealsCardProps> = ({
   label = "Secure the deal",
 }) => {
   const router = useRouter();
-  const handleReferralLink = () => {
-    router.push(referral_link);
+  const impressionSent = useRef(false);
+  const { mutateAsync: sendImpression } = useDealImpression();
+  const { mutateAsync: sendClick } = useDealClick();
+
+  // Impression tracking (fires once after 4s)
+  useEffect(() => {
+    if (!impressionSent.current && uuid) {
+      const timer = setTimeout(async () => {
+        await sendImpression(uuid);
+        impressionSent.current = true;
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [uuid, sendImpression]);
+
+  // Click tracking
+  const handleReferralLink = async () => {
+    if (uuid) {
+      await sendClick(uuid);
+      toast.success("Deal clicked!");
+    }
+    if (referral_link) {
+      router.push(referral_link);
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ import { http } from "@/lib/http";
 export default function useDealImpression() {
   return useMutation({
     mutationFn: async (dealUuid: string) => {
-      await http.post(`/deals/${dealUuid}/impression/`);
+      await http.post(`/deal-stats/${dealUuid}/impression`);
     },
   });
 }

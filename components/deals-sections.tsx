@@ -54,6 +54,7 @@ function DealsSection({ deals }: Props) {
         {deals.map((deal) => (
           <DealsCard
             key={deal.uuid}
+            uuid={deal.uuid}
             name={deal.name}
             requirements={deal.requirements}
             keywords={deal.keywords}

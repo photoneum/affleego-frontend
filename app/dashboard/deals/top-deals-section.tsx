@@ -57,6 +57,7 @@ function TopDealsSection() {
         {dealDetails.map((deal, idx) => (
           <DealsCard
             key={deal.uuid || idx}
+            uuid={deal.uuid}
             name={deal.name}
             requirements={deal.requirements}
             keywords={deal.keywords || []}
