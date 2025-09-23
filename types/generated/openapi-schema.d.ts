@@ -264,6 +264,46 @@ export interface paths {
     patch: operations["deals_partial_update"];
     trace?: never;
   };
+  "/api/v1/deals/{id}/click": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Record a click for a deal
+     * @description Record a click event for a deal.
+     */
+    post: operations["deals_click_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/deals/{id}/impression": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Record an impression for a deal
+     * @description Record an impression event for a deal.
+     */
+    post: operations["deals_impression_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/deals/featured": {
     parameters: {
       query?: never;
@@ -276,6 +316,26 @@ export interface paths {
      * @description List featured deals
      */
     get: operations["deals_featured_list"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/deals/top": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get top performing deals of the week
+     * @description Get top performing deals for the current week.
+     */
+    get: operations["deals_top_list"];
     put?: never;
     post?: never;
     delete?: never;
@@ -374,6 +434,17 @@ export interface components {
       /** Format: uri */
       referral_link: string;
       description?: string;
+    };
+    DealStats: {
+      /** Format: uuid */
+      readonly uuid: string;
+      deal: number;
+      /** Format: date */
+      period_start: string;
+      /** Format: date */
+      period_end: string;
+      clicks?: number;
+      impressions?: number;
     };
     PasswordResetConfirmRequest: {
       /** Format: email */
@@ -919,6 +990,66 @@ export interface operations {
       };
     };
   };
+  deals_click_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DealDetailResponseRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["DealDetailResponseRequest"];
+        "multipart/form-data": components["schemas"]["DealDetailResponseRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            [key: string]: unknown;
+          };
+        };
+      };
+    };
+  };
+  deals_impression_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Deal. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DealDetailResponseRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["DealDetailResponseRequest"];
+        "multipart/form-data": components["schemas"]["DealDetailResponseRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            [key: string]: unknown;
+          };
+        };
+      };
+    };
+  };
   deals_featured_list: {
     parameters: {
       query?: never;
@@ -934,6 +1065,25 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["DealDetailResponse"][];
+        };
+      };
+    };
+  };
+  deals_top_list: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealStats"][];
         };
       };
     };

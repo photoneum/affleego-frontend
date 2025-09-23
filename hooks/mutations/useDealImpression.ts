@@ -1,0 +1,11 @@
+import { useMutation } from "@tanstack/react-query";
+
+import { http } from "@/lib/http";
+
+export default function useDealImpression() {
+  return useMutation({
+    mutationFn: async (dealUuid: string) => {
+      await http.post(`/deals/${dealUuid}/impression/`);
+    },
+  });
+}

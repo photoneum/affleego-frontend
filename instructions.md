@@ -32,14 +32,14 @@ GET /api/v1/user/profile
 
 ### Frontend Implementation
 
-1. **Dashboard Home Page**
+1. **Dashboard Home Page** ✅ Done
 
-   - Update `app/dashboard/page.tsx`
+   - Update `app/dashboard/page.tsx` ✅ Done
    - Implement greeting bar component
    - Add community stats cards
    - Use TanStack Query for data fetching
 
-2. **Update Sidebar Navigation Component**
+2. **Update Sidebar Navigation Component**✅ Done
    - Update `components/nav-main.tsx` and `components/nav-main.tsx` with new routes defined in the plan (Page Structure)
 
 ## Phase 2: Deals & Deals System (Week 3-4)
@@ -64,7 +64,7 @@ GET /api/v1/deals/top
 
 ### Frontend Implementation
 
-1. **Deals Overview Page**
+1. **Deals Overview Page** ✅ Done
 
    - Create `app/dashboard/deals/page.tsx`
    - Implement deals grid with shadcn/ui Cards

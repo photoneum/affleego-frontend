@@ -12,3 +12,5 @@ export const SEND_TG_NOTIFICATION_ROUTE = "/telegram/send_message";
 
 // Deals
 export const GET_DEALS_ROUTE = "/deals";
+export const GET_DEALS_FEATURED_ROUTE = "/deals/featured";
+export const GET_DEALS_TOP_ROUTE = "/deals/top";
