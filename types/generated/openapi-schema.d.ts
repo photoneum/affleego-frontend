@@ -82,6 +82,44 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/auth/profile": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * User Profile
+     * @description Get complete user profile data
+     */
+    get: operations["auth_profile_retrieve"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/auth/refresh": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** @description Takes a refresh type JSON web token and returns an access type JSON web
+     *     token if the refresh token is valid. */
+    post: operations["auth_refresh_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/auth/register": {
     parameters: {
       query?: never;
@@ -122,6 +160,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/auth/update_profile": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    /**
+     * Update User Profile
+     * @description Update user profile data
+     */
+    put: operations["auth_update_profile_update"];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/auth/verify": {
     parameters: {
       query?: never;
@@ -136,6 +194,26 @@ export interface paths {
      * @description Verify user email with verification code
      */
     post: operations["auth_verify_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/dashboard/overview": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Dashboard Overview
+     * @description Get dashboard overview data including user greeting and community stats
+     */
+    get: operations["dashboard_overview_retrieve"];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -206,13 +284,54 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/telegram/send_message": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Send Telegram Message
+     * @description Send a message to the Telegram channel
+     */
+    post: operations["telegram_send_message_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    CommunityStats: {
+      /** Format: uuid */
+      readonly uuid: string;
+      weekly_ftds?: number;
+      top_geo?: string;
+      readonly total_affiliates: string;
+      readonly total_deals: string;
+      /** Format: date */
+      week_starting: string;
+      /** Format: date-time */
+      readonly created_at: string;
+      /** Format: date-time */
+      readonly updated_at: string;
+    };
     CustomTokenObtainPairRequest: {
       email: string;
       password: string;
+    };
+    CustomTokenRefresh: {
+      refresh: string;
+      readonly access: string;
+    };
+    CustomTokenRefreshRequest: {
+      refresh: string;
     };
     /** @description Serializer for detailed Deal representation. */
     DealDetailResponse: {
@@ -295,6 +414,12 @@ export interface components {
      * @enum {string}
      */
     StatusEnum: "open" | "closed";
+    /**
+     * @description * `admin` - Admin
+     *     * `user` - User
+     * @enum {string}
+     */
+    TypeEnum: "admin" | "user";
     UserOnboarding: {
       brand_name: string;
       /** Format: uri */
@@ -320,6 +445,42 @@ export interface components {
       ftds_deliverability_per_month?: number;
       affliate_experience?: string;
       type_of_deals_wanted?: string;
+    };
+    UserProfile: {
+      /** Format: uuid */
+      readonly uuid: string;
+      /**
+       * Email address
+       * Format: email
+       */
+      email: string;
+      first_name?: string;
+      last_name?: string;
+      phone_number?: string;
+      /** Format: uri */
+      image?: string | null;
+      /**
+       * Verified
+       * @description Designates whether this user has verified their accounts.
+       */
+      is_verified?: boolean;
+      type?: components["schemas"]["TypeEnum"];
+      timezone?: string;
+      locale?: string;
+      last_login_ip?: string | null;
+      /** Format: date-time */
+      date_joined?: string;
+      /** Format: date-time */
+      last_login?: string | null;
+    };
+    UserProfileUpdateRequest: {
+      first_name?: string;
+      last_name?: string;
+      phone_number?: string;
+      /** Format: binary */
+      image?: string | null;
+      timezone?: string;
+      locale?: string;
     };
     UserRegistration: {
       /**
@@ -454,6 +615,50 @@ export interface operations {
       };
     };
   };
+  auth_profile_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UserProfile"];
+        };
+      };
+    };
+  };
+  auth_refresh_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CustomTokenRefreshRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["CustomTokenRefreshRequest"];
+        "multipart/form-data": components["schemas"]["CustomTokenRefreshRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CustomTokenRefresh"];
+        };
+      };
+    };
+  };
   auth_register_create: {
     parameters: {
       query?: never;
@@ -503,6 +708,31 @@ export interface operations {
       };
     };
   };
+  auth_update_profile_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["UserProfileUpdateRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["UserProfileUpdateRequest"];
+        "multipart/form-data": components["schemas"]["UserProfileUpdateRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UserProfile"];
+        };
+      };
+    };
+  };
   auth_verify_create: {
     parameters: {
       query?: never;
@@ -524,6 +754,25 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  dashboard_overview_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CommunityStats"];
+        };
       };
     };
   };
@@ -686,6 +935,24 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["DealDetailResponse"][];
         };
+      };
+    };
+  };
+  telegram_send_message_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description No response body */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };

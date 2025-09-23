@@ -11,7 +11,7 @@
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "prepare": "husky",
-    "types:generate:dev": "npx openapi-typescript http://localhost:8000/api/v1/schema/?format=yaml -o types/generated/openapi-schema.d.ts"
+    "types:generate:dev": "npx openapi-typescript http://127.0.0.1:8000/api/v1/schema/?format=yaml -o types/generated/openapi-schema.d.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
