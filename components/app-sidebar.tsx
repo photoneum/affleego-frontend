@@ -5,10 +5,11 @@ import { TbTargetArrow } from "react-icons/tb";
 
 import {
   BookOpenCheck,
+  Camera,
   Flame,
   LayoutDashboard,
+  Mails,
   MessageSquare,
-  Store,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -31,14 +32,9 @@ const navigationItems = [
     isActive: true,
   },
   {
-    title: "Marketplace",
-    url: "/dashboard/marketplace",
-    icon: Store,
-  },
-  {
-    title: "Deals & Tracking",
+    title: "Hot Deals",
     url: "/dashboard/deals",
-    icon: TbTargetArrow,
+    icon: Flame,
   },
   {
     title: "Forums",
@@ -46,14 +42,29 @@ const navigationItems = [
     icon: MessageSquare,
   },
   {
-    title: "Learn & Club Hub",
-    url: "/dashboard/learn-and-club",
+    title: "Academy",
+    url: "/dashboard/academy",
     icon: BookOpenCheck,
   },
   {
-    title: "Hot deals",
-    url: "#",
-    icon: Flame,
+    title: "Webinars",
+    url: "/dashboard/webinars",
+    icon: Camera,
+  },
+  {
+    title: "News",
+    url: "/dashboard/news",
+    icon: Mails,
+  },
+  {
+    title: "Support",
+    url: "/dashboard/support",
+    icon: TbTargetArrow,
+  },
+  {
+    title: "Profile",
+    url: "/dashboard/profile",
+    icon: LayoutDashboard,
   },
 ];
 

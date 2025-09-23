@@ -123,6 +123,8 @@ const config = [
           ignoreCase: true,
         },
       ],
+      // tailwindcss
+      "tailwindcss/no-custom-classname": "off"
     },
   },
 ];
