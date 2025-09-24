@@ -5,13 +5,27 @@ import { http } from "@/lib/http";
 
 import { DealDetailResponse } from "@/types/generated";
 
+interface GetFeaturedDealsResponse {
+  data: DealDetailResponse[];
+}
+
 function getFeaturedDeals() {
-  return http.get(GET_DEALS_FEATURED_ROUTE).then((res) => res.data);
+  return http
+    .get<GetFeaturedDealsResponse>(GET_DEALS_FEATURED_ROUTE)
+    .then((res) => res.data);
 }
 
 export default function useGetFeaturedDeals() {
-  return useQuery<DealDetailResponse[], Error>({
+  const query = useQuery<GetFeaturedDealsResponse, Error>({
     queryKey: ["deals-featured"],
     queryFn: getFeaturedDeals,
   });
+
+  return {
+    data: query.data?.data ?? [],
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
 }

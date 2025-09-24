@@ -11,18 +11,25 @@ function FeaturedDealsSection() {
     error: featuredError,
   } = useGetFeaturedDeals();
 
+  if (!featuredDeals || featuredDeals.length === 0) {
+    return null;
+  }
+
+  if (isLoadingFeatured) {
+    return <div className="text-gray-400">Loading hot deal...</div>;
+  }
+  if (featuredError) {
+    return <div className="text-red-500">Failed to load hot deal</div>;
+  }
+
   return (
     <div>
-      <h2 className="mb-4 text-xl font-semibold">Hot Deal</h2>
-      {isLoadingFeatured ? (
-        <div className="text-gray-400">Loading hot deal...</div>
-      ) : featuredError ? (
-        <div className="text-red-500">Failed to load hot deal</div>
-      ) : featuredDeals && featuredDeals.length > 0 && featuredDeals[0] ? (
-        <HotDealCard deal={featuredDeals[0]} />
-      ) : (
-        <div className="text-gray-400">No hot deal available</div>
-      )}
+      <h2 className="mb-4 text-xl font-semibold">Featured Deals</h2>
+      <div className="grid grid-cols-3 gap-8">
+        {featuredDeals.map((featuredDeal) => (
+          <HotDealCard key={featuredDeal.uuid} deal={featuredDeal} />
+        ))}
+      </div>
     </div>
   );
 }
