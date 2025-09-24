@@ -18,6 +18,7 @@ export interface InfoCardProps {
   icon: React.ReactNode;
   className?: string;
   isLoading?: boolean;
+  description?: string;
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({
@@ -27,6 +28,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
   icon,
   className,
   isLoading = false,
+  description,
 }) => {
   if (isLoading) {
     return <InfoCardSkeleton />;
@@ -50,27 +52,30 @@ const InfoCard: React.FC<InfoCardProps> = ({
       </div>
 
       <div className="mt-auto flex items-end justify-between">
-        <div className="flex flex-row space-x-2">
-          <span className="text-4xl font-bold tracking-tight">{value}</span>
-          {change && (
-            <div className="mt-1 flex items-center">
-              <span
-                className={cn(
-                  "rounded px-2 py-0.5 text-sm font-medium",
-                  change.isPositive
-                    ? "bg-green-400/10 text-green-400"
-                    : "bg-red-400/10 text-red-400",
-                )}
-              >
-                {change.isPositive ? "↑" : "↓"}{" "}
-                {Math.abs(change.value).toFixed(1)}%
-              </span>
-            </div>
+        <div className="flex w-full flex-row items-center justify-between space-x-2">
+          <div className="flex flex-row items-center space-x-2">
+            <span className="text-4xl font-bold tracking-tight">{value}</span>
+            {change && (
+              <div className="mt-1 flex items-center">
+                <span
+                  className={cn(
+                    "rounded px-2 py-0.5 text-sm font-medium",
+                    change.isPositive
+                      ? "bg-green-400/10 text-green-400"
+                      : "bg-red-400/10 text-red-400",
+                  )}
+                >
+                  {change.isPositive ? "↑" : "↓"}{" "}
+                  {Math.abs(change.value).toFixed(1)}%
+                </span>
+              </div>
+            )}
+          </div>
+          {description && (
+            <p className="mt-4 font-medium text-gray-400">{description}</p>
           )}
         </div>
       </div>
-
-      <div className="absolute -right-10 -top-10 size-40 rounded-full bg-gradient-to-br from-gray-800/20 to-transparent transition-transform duration-500 group-hover:scale-110"></div>
     </div>
   );
 };

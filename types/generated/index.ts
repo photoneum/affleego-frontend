@@ -20,3 +20,4 @@ export type UserOnboardingRequest =
   components["schemas"]["UserOnboardingRequest"];
 export type DealDetailResponse = components["schemas"]["DealDetailResponse"];
 export type DealStats = components["schemas"]["DealStats"];
+export type DealStatsOverview = components["schemas"]["DealStatsOverview"];

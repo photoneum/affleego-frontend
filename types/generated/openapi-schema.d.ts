@@ -257,6 +257,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/deal-stats/overview": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get overview statistics for deals
+     * @description ViewSet for deal stats actions (top deals, click, impression).
+     */
+    get: operations["deal_stats_overview_retrieve"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/deal-stats/top": {
     parameters: {
       query?: never;
@@ -450,6 +470,18 @@ export interface components {
       period_end: string;
       clicks?: number;
       impressions?: number;
+    };
+    /** @description Serializer for deal stats overview response.
+     *
+     *     Returns statistics for featured, hot, and all deals, including week period. */
+    DealStatsOverview: {
+      featured_deals: number;
+      hot_deals: number;
+      /** Format: date */
+      week_start: string;
+      /** Format: date */
+      week_end: string;
+      all_deals: number;
     };
     PasswordResetConfirmRequest: {
       /** Format: email */
@@ -889,6 +921,25 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["ApiResponse"];
+        };
+      };
+    };
+  };
+  deal_stats_overview_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealStatsOverview"];
         };
       };
     };
