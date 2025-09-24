@@ -33,19 +33,39 @@ export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
   label = "Secure the deal",
 }) => {
   const router = useRouter();
+  const cardRef = useRef<HTMLDivElement>(null);
   const impressionSent = useRef(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const { mutateAsync: sendImpression } = useDealImpression();
   const { mutateAsync: sendClick } = useDealClick();
 
-  // Impression tracking (fires once after 4s)
+  // Impression tracking: fires only if card is in view for 4s
   useEffect(() => {
-    if (!impressionSent.current && uuid) {
-      const timer = setTimeout(async () => {
-        await sendImpression(uuid);
-        impressionSent.current = true;
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
+    const node = cardRef.current;
+    if (!node || impressionSent.current) return;
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry?.isIntersecting && !impressionSent.current) {
+          timerRef.current = setTimeout(async () => {
+            await sendImpression(uuid);
+            impressionSent.current = true;
+            observer.disconnect();
+          }, 4000);
+        } else if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [uuid, sendImpression]);
 
   // Click tracking
@@ -59,7 +79,10 @@ export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-lg rounded-xl bg-[#11111A] p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div
+      ref={cardRef}
+      className="mx-auto w-full max-w-lg rounded-xl bg-[#11111A] p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+    >
       <div className="space-y-4">
         <div>
           <h3 className="mb-1 text-xl font-semibold">{name}</h3>
@@ -89,12 +112,6 @@ export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
             label="Revenue Share"
             value={revenue_share}
           />
-
-          {/* <MetricDisplay
-            icon={<DollarSign size={20} />}
-            label="CPA Rate"
-            value={cpa_rate}
-          /> */}
 
           <MetricDisplay
             icon={<Clock size={20} />}
