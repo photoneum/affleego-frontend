@@ -27,7 +27,6 @@ function TopDealsSection() {
         {topDeals.map((topDeal, idx) => (
           <DealsCard
             key={topDeal.uuid || idx}
-            uuid={topDeal.deal.uuid}
             name={topDeal.deal.name}
             requirements={topDeal.deal.requirements}
             keywords={topDeal.deal.keywords || []}

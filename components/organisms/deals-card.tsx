@@ -16,11 +16,11 @@ import { MetricDisplay } from "../molecules/metric-display";
 import { Button } from "../ui/button";
 
 export interface DealsCardProps extends Omit<DealDetailResponse, "uuid"> {
-  uuid: string;
+  uuid?: string;
   label?: string;
 }
 
-export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
+export const DealsCard: React.FC<DealsCardProps> = ({
   uuid,
   name,
   requirements,
@@ -49,7 +49,9 @@ export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
         const [entry] = entries;
         if (entry?.isIntersecting && !impressionSent.current) {
           timerRef.current = setTimeout(async () => {
-            await sendImpression(uuid);
+            if (uuid) {
+              await sendImpression(uuid);
+            }
             impressionSent.current = true;
             observer.disconnect();
           }, 4000);
