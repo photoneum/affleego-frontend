@@ -7,10 +7,12 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_API_BASE_URL: z.string().url(),
+    NEXT_PUBLIC_IMAGE_BASE_URL: z.string().url(),
   },
 
   //   For Next.js >= 13.4.4, you only need to destructure client variables:
   experimental__runtimeEnv: {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    NEXT_PUBLIC_IMAGE_BASE_URL: process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
   },
 });

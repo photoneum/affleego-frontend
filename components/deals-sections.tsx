@@ -64,6 +64,7 @@ function DealsSection({ deals, showViewAll }: Props) {
             payout_schedule={deal.payout_schedule}
             commission_type={deal.commission_type}
             referral_link={deal.referral_link}
+            logo_url={deal.logo_url}
           />
         ))}
       </div>

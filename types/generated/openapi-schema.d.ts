@@ -419,6 +419,7 @@ export interface components {
       description?: string;
       /** @description Convert comma-separated keywords to a list. */
       readonly keywords: string[];
+      readonly logo_url: string;
     };
     /** @description Serializer for detailed Deal representation. */
     DealDetailResponseRequest: {

@@ -24,19 +24,21 @@ function TopDealsSection() {
     <div>
       <h2 className="mb-4 text-xl font-semibold">Top Deals</h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {topDeals.map((topDeal, idx) => (
-          <DealsCard
-            key={topDeal.uuid || idx}
-            name={topDeal.deal.name}
-            requirements={topDeal.deal.requirements}
-            keywords={topDeal.deal.keywords || []}
-            projected_payout={topDeal.deal.projected_payout}
-            revenue_share={topDeal.deal.revenue_share}
-            payout_schedule={topDeal.deal.payout_schedule}
-            commission_type={topDeal.deal.commission_type}
-            referral_link={topDeal.deal.referral_link}
-          />
-        ))}
+        {Array.isArray(topDeals) &&
+          topDeals.map((topDeal, idx) => (
+            <DealsCard
+              key={topDeal.uuid || idx}
+              name={topDeal.deal.name}
+              requirements={topDeal.deal.requirements}
+              keywords={topDeal.deal.keywords || []}
+              projected_payout={topDeal.deal.projected_payout}
+              revenue_share={topDeal.deal.revenue_share}
+              payout_schedule={topDeal.deal.payout_schedule}
+              commission_type={topDeal.deal.commission_type}
+              referral_link={topDeal.deal.referral_link}
+              logo_url={topDeal.deal.logo_url}
+            />
+          ))}
       </div>
     </div>
   );

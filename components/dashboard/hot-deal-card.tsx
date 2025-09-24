@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import Image from "next/image";
+
 import { motion } from "framer-motion";
 import { Award, BadgeCheck, DollarSign, Percent } from "lucide-react";
 
@@ -10,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import useDealClick from "@/hooks/mutations/useDealClick";
 import useDealImpression from "@/hooks/mutations/useDealImpression";
+
+import { getImageUrl } from "@/lib/utils/imageUrl";
 
 import type { DealDetailResponse } from "@/types/generated";
 
@@ -61,21 +65,33 @@ export function HotDealCard({ deal }: HotDealCardProps) {
         className="relative flex flex-col justify-between overflow-hidden border-2 border-yellow-400 bg-[#18181b] shadow-2xl backdrop-blur-lg"
         aria-label="Featured Hot Deal"
       >
-        <CardHeader className="flex flex-row items-center gap-3 pb-0">
-          <span
-            className="flex animate-[pulse_2s_infinite] items-center justify-center rounded-full bg-yellow-400 p-2 shadow-lg ring-4 ring-yellow-300/40"
-            aria-label="Hot Deal"
-          >
-            <Award size={32} className="text-yellow-900 drop-shadow-lg" />
-          </span>
-          <CardTitle className="text-3xl font-extrabold text-white drop-shadow-lg">
-            {deal.name}
-          </CardTitle>
-          {deal.is_featured && (
-            <span className="ml-2 animate-[pulse_1.5s_infinite] rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 px-3 py-1 text-xs font-bold text-yellow-900 shadow ring-2 ring-yellow-300/60">
-              Featured
-            </span>
-          )}
+        <CardHeader className="flex flex-row items-start gap-3 pb-0">
+          <div className="flex items-center justify-center rounded-full bg-white p-0.5 shadow-lg">
+            {deal.logo_url ? (
+              <Image
+                src={getImageUrl(deal.logo_url)}
+                alt={deal.name + " logo"}
+                width={300}
+                height={300}
+                className="size-12 rounded-full object-cover"
+                style={{ background: "#fff" }}
+              />
+            ) : (
+              <div className="flex size-12 items-center justify-center rounded-full bg-gray-200 text-gray-500 shadow-lg">
+                <Award size={32} className="text-yellow-500" />
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col space-y-3">
+            <CardTitle className="line-clamp-2 text-3xl font-extrabold text-white drop-shadow-lg">
+              {deal.name}
+            </CardTitle>
+            {deal.is_featured && (
+              <span className="w-fit animate-[pulse_1.5s_infinite] rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 px-3 py-1 text-xs font-bold text-yellow-900 shadow ring-2 ring-yellow-300/60">
+                Featured
+              </span>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="flex flex-1 flex-col justify-between pt-2">
           <div>
