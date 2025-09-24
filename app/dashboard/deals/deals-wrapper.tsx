@@ -8,7 +8,11 @@ import DealsSection from "@/components/deals-sections";
 
 import useGetDeals from "@/hooks/queries/useGetDeals";
 
-function DealsWrapper() {
+type Props = {
+  showViewAll?: boolean;
+};
+
+function DealsWrapper({ showViewAll }: Props) {
   const { data, isLoading } = useGetDeals();
 
   if (isLoading) {
@@ -20,7 +24,7 @@ function DealsWrapper() {
     );
   }
 
-  return <DealsSection deals={data?.data} />;
+  return <DealsSection deals={data?.data} showViewAll={showViewAll} />;
 }
 
 export default DealsWrapper;

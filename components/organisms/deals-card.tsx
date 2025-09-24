@@ -96,7 +96,14 @@ export const DealsCard: React.FC<DealsCardProps> = ({
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div
+          className="hide-scrollbar flex flex-nowrap gap-2 overflow-x-auto py-1"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {/* Hide scrollbar for Webkit browsers */}
+          <style>{`
+            .hide-scrollbar::-webkit-scrollbar { display: none; }
+          `}</style>
           {keywords.map((keyword) => (
             <TagBadge key={keyword} label={keyword} />
           ))}

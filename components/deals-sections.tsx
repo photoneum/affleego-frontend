@@ -35,9 +35,10 @@ export function NoDeals() {
 
 type Props = {
   deals: DealDetailResponse[] | undefined;
+  showViewAll?: boolean;
 };
 
-function DealsSection({ deals }: Props) {
+function DealsSection({ deals, showViewAll }: Props) {
   const router = useRouter();
 
   if (!deals) {
@@ -50,7 +51,7 @@ function DealsSection({ deals }: Props) {
     }
 
     return (
-      <div className="grid grid-cols-1 justify-between md:grid-cols-2 md:gap-10">
+      <div className="grid grid-cols-1 justify-between md:grid-cols-3 md:gap-10">
         {deals.map((deal) => (
           <DealsCard
             key={deal.uuid}
@@ -72,11 +73,13 @@ function DealsSection({ deals }: Props) {
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex flex-row items-center justify-between">
-        <h2 className="mb-4 text-xl font-semibold">Deals</h2>
-        <Button onClick={() => router.push("/dashboard/deals")} variant="cta">
-          <Tags size={40} />
-          View All
-        </Button>
+        <h2 className="mb-4 text-xl font-semibold">Recent Deals</h2>
+        {showViewAll && (
+          <Button onClick={() => router.push("/dashboard/deals")} variant="cta">
+            <Tags size={40} />
+            View All
+          </Button>
+        )}
       </div>
       {renderDeals()}
     </div>
