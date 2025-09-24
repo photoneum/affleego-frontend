@@ -4,6 +4,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        hostname: "localhost",
+      },
+      {
+        hostname: "app.affleego.com",
+      },
+      {
         hostname: "images.pexels.com",
       },
       {

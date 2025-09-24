@@ -24,6 +24,7 @@ applyTo: "**"
 - Phase 1 (Core Dashboard Infrastructure) is fully implemented and validated
 - CommunityStats component refactored to use shadcn/ui Card, Lucide icons, color accents, bold/animated numbers (framer-motion), and accessibility/responsiveness
 - All lint and build errors resolved; type safety for stat config is robust
+- HotDealCard and DealsCard now both render the company logo from logo_url in a perfectly rounded container, with fallback Award icon if logo_url is missing or empty. Both use alt text and aria-label for accessibility. Container size, border, and shadow are visually consistent (48x48px, bg-white, p-1, shadow-lg, ring-yellow-300/40). Type safety is robust (logo_url is always a string, fallback checks for empty string). Implementation follows OpenAPI schema and shadcn/ui best practices.
 
 ## Coding Patterns
 
@@ -41,9 +42,9 @@ applyTo: "**"
 
 ## Conversation History
 
-- Important decisions made: Contract-first API, phased dashboard refactor, Sonner toast import fix, stat card UI/UX enhancement
+- Important decisions made: Contract-first API, phased dashboard refactor, Sonner toast import fix, stat card UI/UX enhancement, HotDealCard/DealsCard logo integration
 - Recurring questions or topics: API types, error handling, responsive UI, stat card best practices
-- Solutions that worked well: Custom hooks, shadcn/ui, Sonner toasts, TanStack Query for API, stat card config
+- Solutions that worked well: Custom hooks, shadcn/ui, Sonner toasts, TanStack Query for API, stat card config, logo container consistency
 - Things to avoid or that didn't work: Placeholder logic, inconsistent error handling, incorrect Sonner import, use of `any` in stat config
 
 ## Notes
@@ -54,3 +55,4 @@ applyTo: "**"
 - Sidebar navigation must reflect new dashboard routes
 - Phase 1 is complete and ready for next phase
 - CommunityStats stat cards now visually "pop" and are fully accessible/responsive
+- HotDealCard/DealsCard logo integration is complete and robust

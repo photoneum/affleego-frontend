@@ -10,9 +10,13 @@ type GetDealsResponse = {
   data: DealDetailResponse[];
 };
 
-function useGetDeals() {
+type UseGetDealsConfig = {
+  count?: number;
+};
+
+function useGetDeals(config: UseGetDealsConfig = {}) {
   const query = useQuery<GetDealsResponse, Error>({
-    queryKey: [DEALS_QUERY_KEY],
+    queryKey: [DEALS_QUERY_KEY, config.count],
     queryFn: () => getDeals(),
   });
 

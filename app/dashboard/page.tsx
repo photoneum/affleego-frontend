@@ -9,7 +9,7 @@ export default function Page() {
     <div className="container mx-auto flex flex-1 flex-col space-y-8 p-4 pt-0 text-white md:px-10 md:py-4">
       <DashboardPageHeader type="welcome" />
       <Analytics />
-      <DealsWrapper />
+      <DealsWrapper showViewAll={true} />
       <ComissionSection />
     </div>
   );
