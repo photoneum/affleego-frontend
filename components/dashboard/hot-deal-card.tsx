@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -33,7 +31,6 @@ export function HotDealCard({ deal }: HotDealCardProps) {
 
   const handleClick = () => {
     sendClick(deal.uuid);
-    toast.success("Deal clicked!");
     window.open(deal.referral_link, "_blank");
   };
 

@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { Calendar, Clock, Copy, PercentCircle } from "lucide-react";
-import { toast } from "sonner";
 
 import useDealClick from "@/hooks/mutations/useDealClick";
 import useDealImpression from "@/hooks/mutations/useDealImpression";
@@ -53,7 +52,6 @@ export const DealsCard: React.FC<DealsCardProps & { uuid: string }> = ({
   const handleReferralLink = async () => {
     if (uuid) {
       await sendClick(uuid);
-      toast.success("Deal clicked!");
     }
     if (referral_link) {
       router.push(referral_link);
