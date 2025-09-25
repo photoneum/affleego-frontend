@@ -1,5 +1,6 @@
 import Analytics from "@/components/analytics";
 import DashboardPageHeader from "@/components/dashboard-page-header";
+import { AnnouncementCarouselExample } from "@/components/dashboard/announcement-carousel-example";
 import ComissionSection from "@/components/rewards-sections";
 
 import DealsWrapper from "./deals/deals-wrapper";
@@ -10,6 +11,7 @@ export default function Page() {
       <DashboardPageHeader type="welcome" />
       <Analytics />
       <DealsWrapper showViewAll={true} />
+      <AnnouncementCarouselExample />
       <ComissionSection />
     </div>
   );
