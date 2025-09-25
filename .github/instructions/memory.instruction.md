@@ -62,3 +62,5 @@ applyTo: "**"
 - HotDealCard/DealsCard logo integration is complete and robust
 - DealsOverview, InfoCardSkeleton, FeaturedDealsSection, and DealsSection components are now fully mobile responsive
 - PromotionCard component ready for announcement carousel integration with props: title, content, imageUrl?, ctaText?, onCtaClick?, className?, ctaProps?
+- AnnouncementCarousel component implemented with flexible card type support (PromotionCard, HotDealCard, DealsCard), auto-rotation with configurable timing, manual navigation (arrows, dots), pause-on-hover, keyboard navigation (arrows, spacebar, home/end), progress indicator, and accessibility features
+- Carousel architecture uses ReactElement[] for cards prop with single card optimization, framer-motion for smooth animations, and comprehensive prop customization
