@@ -13,7 +13,7 @@ import getDailyNumber from "@/lib/utils/dailyNumber";
 function DealsOverview() {
   const { data, isLoading } = useGetDealsOverview();
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
       <InfoCard
         title="Total Number of Deals"
         value={String(data?.all_deals ?? 0)}
@@ -22,7 +22,7 @@ function DealsOverview() {
           isPositive: true,
         }}
         icon={<PackageOpen className="text-yellow-400" size={18} />}
-        className="w-full md:w-96"
+        className="w-full p-4 sm:p-6 md:w-96"
         isLoading={isLoading}
       />
       <InfoCard
@@ -33,7 +33,7 @@ function DealsOverview() {
           isPositive: true,
         }}
         icon={<PackageOpen className="text-yellow-400" size={18} />}
-        className="w-full md:w-96"
+        className="w-full p-4 sm:p-6 md:w-96"
         isLoading={isLoading}
       />
       <div className="flex flex-col space-y-2">
@@ -45,7 +45,7 @@ function DealsOverview() {
             isPositive: true,
           }}
           icon={<PackageOpen className="text-yellow-400" size={18} />}
-          className="w-full md:w-96"
+          className="w-full p-4 sm:p-6 md:w-96"
           isLoading={isLoading}
           description={`${data?.week_start} - ${data?.week_end}`}
         />

@@ -10,7 +10,7 @@ const InfoCardSkeleton: React.FC<InfoCardSkeletonProps> = ({ className }) => {
   return (
     <div
       className={cn(
-        "group relative flex animate-pulse flex-col overflow-hidden rounded-xl border-[#343B4F] bg-[#11111A] p-6 text-white transition-all duration-300",
+        "group relative flex animate-pulse flex-col overflow-hidden rounded-xl border-[#343B4F] bg-[#11111A] p-4 text-white transition-all duration-300 sm:p-6",
         className,
       )}
     >

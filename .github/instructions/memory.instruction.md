@@ -14,6 +14,7 @@ applyTo: "**"
 - For Tanstack query and mutations hooks, put them in the /hooks and the nested /hooks/(queries or mutations) folders. Query functions should be in the services folder.
 - Any hook that is used in a page, that page should be marked as "use client", use client components should be minimized, use server components where possible.
 - Destructure import objects from React rather than importing the entire React object e.g. { useEffect, useState }.
+- Always ensure dashboard stat cards and overview components are fully mobile responsive using Tailwind best practices.
 
 ## Project Context
 
@@ -25,6 +26,7 @@ applyTo: "**"
 - CommunityStats component refactored to use shadcn/ui Card, Lucide icons, color accents, bold/animated numbers (framer-motion), and accessibility/responsiveness
 - All lint and build errors resolved; type safety for stat config is robust
 - HotDealCard and DealsCard now both render the company logo from logo_url in a perfectly rounded container, with fallback Award icon if logo_url is missing or empty. Both use alt text and aria-label for accessibility. Container size, border, and shadow are visually consistent (48x48px, bg-white, p-1, shadow-lg, ring-yellow-300/40). Type safety is robust (logo_url is always a string, fallback checks for empty string). Implementation follows OpenAPI schema and shadcn/ui best practices.
+- DealsOverview, InfoCardSkeleton, FeaturedDealsSection, and DealsSection components are now fully mobile responsive using Tailwind grid and spacing best practices.
 
 ## Coding Patterns
 
@@ -56,3 +58,4 @@ applyTo: "**"
 - Phase 1 is complete and ready for next phase
 - CommunityStats stat cards now visually "pop" and are fully accessible/responsive
 - HotDealCard/DealsCard logo integration is complete and robust
+- DealsOverview, InfoCardSkeleton, FeaturedDealsSection, and DealsSection components are now fully mobile responsive

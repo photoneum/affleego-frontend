@@ -25,7 +25,7 @@ function FeaturedDealsSection() {
   return (
     <div>
       <h2 className="mb-4 text-xl font-semibold">Featured Deals</h2>
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
         {featuredDeals.map((featuredDeal) => (
           <HotDealCard key={featuredDeal.uuid} deal={featuredDeal} />
         ))}

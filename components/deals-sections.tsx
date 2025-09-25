@@ -51,7 +51,7 @@ function DealsSection({ deals, showViewAll }: Props) {
     }
 
     return (
-      <div className="grid grid-cols-1 justify-between md:grid-cols-3 md:gap-10">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
         {deals.map((deal) => (
           <DealsCard
             key={deal.uuid}
@@ -73,7 +73,7 @@ function DealsSection({ deals, showViewAll }: Props) {
 
   return (
     <div className="flex flex-col space-y-3">
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
         <h2 className="mb-4 text-xl font-semibold">Recent Deals</h2>
         {showViewAll && (
           <Button onClick={() => router.push("/dashboard/deals")} variant="cta">
