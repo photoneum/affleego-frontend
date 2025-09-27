@@ -21,3 +21,4 @@ export type UserOnboardingRequest =
 export type DealDetailResponse = components["schemas"]["DealDetailResponse"];
 export type DealStats = components["schemas"]["DealStats"];
 export type DealStatsOverview = components["schemas"]["DealStatsOverview"];
+export type Promotions = components["schemas"]["Promotions"];

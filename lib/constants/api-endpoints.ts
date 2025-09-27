@@ -17,3 +17,6 @@ export const GET_DEALS_FEATURED_ROUTE = "/deals/featured";
 // Deal Stats
 export const GET_DEALS_TOP_ROUTE = "/deal-stats/top";
 export const GET_DEALS_OVERVIEW_ROUTE = "/deal-stats/overview";
+
+// Promotions
+export const GET_PROMOTIONS_ROUTE = "/promotions";

@@ -361,6 +361,62 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/promotions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List promotions
+     * @description List all promotions
+     */
+    get: operations["promotions_list"];
+    put?: never;
+    /**
+     * Create promotion
+     * @description Create a new promotion
+     */
+    post: operations["promotions_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/promotions/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get promotion
+     * @description Retrieve a specific promotion by UUID
+     */
+    get: operations["promotions_retrieve"];
+    /**
+     * Update promotion
+     * @description Update a promotion
+     */
+    put: operations["promotions_update"];
+    post?: never;
+    /**
+     * Delete promotion
+     * @description Delete a promotion
+     */
+    delete: operations["promotions_destroy"];
+    options?: never;
+    head?: never;
+    /**
+     * Partial update promotion
+     * @description Partially update a promotion
+     */
+    patch: operations["promotions_partial_update"];
+    trace?: never;
+  };
   "/api/v1/telegram/send_message": {
     parameters: {
       query?: never;
@@ -511,6 +567,37 @@ export interface components {
       /** Format: uri */
       referral_link?: string;
       description?: string;
+    };
+    PatchedPromotionsRequest: {
+      title?: string;
+      content?: string;
+      /** Format: binary */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url?: string;
+    };
+    Promotions: {
+      /** Format: uuid */
+      readonly uuid: string;
+      title: string;
+      content: string;
+      /** Format: uri */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url: string;
+      readonly created_by: string;
+      /** Format: date-time */
+      readonly created_at: string;
+      /** Format: date-time */
+      readonly updated_at: string;
+    };
+    PromotionsRequest: {
+      title: string;
+      content: string;
+      /** Format: binary */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url: string;
     };
     ResendVerificationCodeRequest: {
       /** Format: email */
@@ -1121,6 +1208,162 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["DealDetailResponse"][];
+        };
+      };
+    };
+  };
+  promotions_list: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"][];
+        };
+      };
+    };
+  };
+  promotions_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "multipart/form-data": {
+          /** @description Title of the promotion */
+          title: string;
+          /** @description Content of the promotion */
+          content: string;
+          /**
+           * Format: binary
+           * @description Background image file (optional)
+           */
+          image_background?: string | null;
+          /**
+           * Format: uri
+           * @description Call-to-action URL
+           */
+          cta_url: string;
+        };
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PromotionsRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["PromotionsRequest"];
+        "multipart/form-data": components["schemas"]["PromotionsRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_destroy: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description No response body */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  promotions_partial_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["PatchedPromotionsRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["PatchedPromotionsRequest"];
+        "multipart/form-data": components["schemas"]["PatchedPromotionsRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
         };
       };
     };
