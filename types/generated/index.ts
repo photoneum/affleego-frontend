@@ -19,6 +19,8 @@ export type PasswordResetConfirmRequest =
 export type UserOnboardingRequest =
   components["schemas"]["UserOnboardingRequest"];
 export type DealDetailResponse = components["schemas"]["DealDetailResponse"];
+export type DealPaginatedResponse =
+  components["schemas"]["DealPaginatedResponse"];
 export type DealStats = components["schemas"]["DealStats"];
 export type DealStatsOverview = components["schemas"]["DealStatsOverview"];
 export type Promotions = components["schemas"]["Promotions"];

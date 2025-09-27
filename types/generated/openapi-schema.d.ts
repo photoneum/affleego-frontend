@@ -350,9 +350,9 @@ export interface paths {
     };
     /**
      * Featured Deals
-     * @description List featured deals
+     * @description List featured deals with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
-    get: operations["deals_featured_list"];
+    get: operations["deals_featured_retrieve"];
     put?: never;
     post?: never;
     delete?: never;
@@ -495,7 +495,8 @@ export interface components {
       description?: string;
       /** @description Convert comma-separated keywords to a list. */
       readonly keywords: string[];
-      readonly logo_url: string;
+      /** Format: uri */
+      logo_url?: string | null;
     };
     /** @description Serializer for detailed Deal representation. */
     DealDetailResponseRequest: {
@@ -515,6 +516,13 @@ export interface components {
       /** Format: uri */
       referral_link: string;
       description?: string;
+      /** Format: binary */
+      logo_url?: string | null;
+    };
+    /** @description Serializer for paginated Deal response. */
+    DealPaginatedResponse: {
+      results: components["schemas"]["DealDetailResponse"][];
+      pagination: components["schemas"]["PaginationMetadata"];
     };
     DealStats: {
       /** Format: uuid */
@@ -538,6 +546,17 @@ export interface components {
       /** Format: date */
       week_end: string;
       all_deals: number;
+    };
+    /** @description Serializer for pagination metadata. */
+    PaginationMetadata: {
+      current_page: number;
+      total_pages: number;
+      page_size: number;
+      total_count: number;
+      has_next: boolean;
+      has_previous: boolean;
+      next_page: number | null;
+      previous_page: number | null;
     };
     PasswordResetConfirmRequest: {
       /** Format: email */
@@ -567,6 +586,8 @@ export interface components {
       /** Format: uri */
       referral_link?: string;
       description?: string;
+      /** Format: binary */
+      logo_url?: string | null;
     };
     PatchedPromotionsRequest: {
       title?: string;
@@ -1193,9 +1214,18 @@ export interface operations {
       };
     };
   };
-  deals_featured_list: {
+  deals_featured_retrieve: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Order direction */
+        order?: "asc" | "desc";
+        /** @description Field to order by */
+        order_by?: "created_at" | "name" | "updated_at";
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -1207,7 +1237,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealDetailResponse"][];
+          "application/json": components["schemas"]["DealPaginatedResponse"];
         };
       };
     };
