@@ -8,16 +8,22 @@ import useGetTopDeals from "@/hooks/queries/useGetTopDeals";
 
 function TopDealsSection() {
   const {
-    data: topDeals,
+    data,
     isLoading: isLoadingTop,
     error: topDealsError,
   } = useGetTopDeals();
+
+  const topDeals = data?.results ?? [];
 
   if (isLoadingTop) {
     return <div className="text-gray-400">Loading top deals...</div>;
   }
   if (topDealsError) {
     return <div className="text-red-500">Failed to load top deals</div>;
+  }
+
+  if (!topDeals || topDeals.length === 0) {
+    return null;
   }
 
   return (

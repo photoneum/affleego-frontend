@@ -17,7 +17,12 @@ function AnnouncementsWrapper() {
   const { data: promotions, isLoading: isLoadingPromotions } =
     useGetPromotions();
 
-  const { data: topDeals, isLoading: isLoadingTop } = useGetTopDeals();
+  const { data: topDealsData, isLoading: isLoadingTop } = useGetTopDeals({
+    page: 1,
+    page_size: 1,
+  });
+
+  const topDeals = topDealsData?.results ?? [];
 
   if (isLoadingPromotions || isLoadingTop) {
     return (

@@ -285,10 +285,10 @@ export interface paths {
       cookie?: never;
     };
     /**
-     * Get top performing deals of the week
-     * @description ViewSet for deal stats actions (top deals, click, impression).
+     * Top Performing Deals
+     * @description Get top performing deals of the week with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
-    get: operations["deal_stats_top_list"];
+    get: operations["deal_stats_top_retrieve"];
     put?: never;
     post?: never;
     delete?: never;
@@ -546,6 +546,11 @@ export interface components {
       /** Format: date */
       week_end: string;
       all_deals: number;
+    };
+    /** @description Serializer for paginated Deal Stats response. */
+    DealStatsPaginatedResponse: {
+      results: components["schemas"]["DealStats"][];
+      pagination: components["schemas"]["PaginationMetadata"];
     };
     /** @description Serializer for pagination metadata. */
     PaginationMetadata: {
@@ -1052,9 +1057,14 @@ export interface operations {
       };
     };
   };
-  deal_stats_top_list: {
+  deal_stats_top_retrieve: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -1066,7 +1076,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealStats"][];
+          "application/json": components["schemas"]["DealStatsPaginatedResponse"];
         };
       };
     };

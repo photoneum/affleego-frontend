@@ -9,23 +9,35 @@ interface GetFeaturedDealsResponse {
   data: DealPaginatedResponse;
 }
 
+interface UseGetFeaturedDealsConfig {
+  order: "asc" | "desc";
+  page?: number;
+  page_size?: number;
+}
+
 function getFeaturedDeals(config?: UseGetFeaturedDealsConfig) {
   return http
     .get<GetFeaturedDealsResponse>(GET_DEALS_FEATURED_ROUTE, { params: config })
     .then((res) => res.data);
 }
 
-type UseGetFeaturedDealsConfig = {
-  order: "asc" | "desc";
-  page?: number;
-  page_size?: number;
-};
-
 export default function useGetFeaturedDeals(
   config?: UseGetFeaturedDealsConfig,
 ) {
+  const queryKey = ["deals-featured"];
+  if (config?.order) {
+    queryKey.push(config.order);
+  }
+  if (config?.page) {
+    queryKey.push(String(config.page));
+  }
+  if (config?.page_size) {
+    queryKey.push(String(config.page_size));
+  }
+
   const query = useQuery<GetFeaturedDealsResponse, Error>({
-    queryKey: ["deals-featured", config],
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey,
     queryFn: () => getFeaturedDeals(config),
   });
 
