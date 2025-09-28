@@ -10,7 +10,7 @@ export default function Page() {
       <DashboardPageHeader type="welcome" />
       <AnnouncementsWrapper />
 
-      <DealsWrapper showViewAll={true} />
+      <DealsWrapper showViewAll={true} pageSize={6} />
       <ComissionSection />
     </div>
   );

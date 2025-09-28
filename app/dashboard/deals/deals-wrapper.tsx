@@ -10,10 +10,12 @@ import useGetDeals from "@/hooks/queries/useGetDeals";
 
 type Props = {
   showViewAll?: boolean;
+  pageSize?: number;
 };
 
-function DealsWrapper({ showViewAll }: Props) {
-  const { data, isLoading } = useGetDeals();
+function DealsWrapper({ showViewAll, pageSize }: Props) {
+  const { data, isLoading } = useGetDeals({ page_size: pageSize || 6 });
+  const deals = data?.results;
 
   if (isLoading) {
     return (
@@ -24,7 +26,7 @@ function DealsWrapper({ showViewAll }: Props) {
     );
   }
 
-  return <DealsSection deals={data?.data} showViewAll={showViewAll} />;
+  return <DealsSection deals={deals} showViewAll={showViewAll} />;
 }
 
 export default DealsWrapper;

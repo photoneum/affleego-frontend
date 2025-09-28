@@ -306,7 +306,7 @@ export interface paths {
     };
     /**
      * List Deals
-     * @description List all available deals
+     * @description List all available deals with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
     get: operations["deals_list"];
     put?: never;
@@ -1083,7 +1083,16 @@ export interface operations {
   };
   deals_list: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Order direction */
+        order?: "asc" | "desc";
+        /** @description Field to order by */
+        order_by?: "created_at" | "name" | "updated_at";
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -1095,7 +1104,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealDetailResponse"][];
+          "application/json": components["schemas"]["DealPaginatedResponse"][];
         };
       };
     };
