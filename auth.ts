@@ -82,7 +82,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user: authResponse, account }) {
+    async jwt({ token, user: authResponse, trigger, account, session }) {
+      if (trigger === "update" && session?.user) {
+        // Merge the updated user data from the client-side session into the token
+        return { ...token, user: { ...token.user, ...session.user } };
+      }
       // Initial sign in
       if (authResponse) {
         const { user, access, refresh } = authResponse as Session;

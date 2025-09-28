@@ -26,7 +26,7 @@ function DealsPage() {
       {/* Top Deals Section */}
       <TopDealsSection />
       {/* Deals Grid Section */}
-      <DealsWrapper />
+      <DealsWrapper pageSize={10} />
     </div>
   );
 }

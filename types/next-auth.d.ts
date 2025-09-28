@@ -8,6 +8,7 @@ export interface CustomAuthUser extends User {
   last_name: string;
   email: string;
   image_url: string;
+  type: "admin" | "user";
 }
 
 declare module "next-auth" {

@@ -170,7 +170,7 @@ export interface paths {
     get?: never;
     /**
      * Update User Profile
-     * @description Update user profile data
+     * @description Update user profile data. The image field accepts binary file uploads. Use multipart/form-data content type when uploading files.
      */
     put: operations["auth_update_profile_update"];
     post?: never;
@@ -285,10 +285,10 @@ export interface paths {
       cookie?: never;
     };
     /**
-     * Get top performing deals of the week
-     * @description ViewSet for deal stats actions (top deals, click, impression).
+     * Top Performing Deals
+     * @description Get top performing deals of the week with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
-    get: operations["deal_stats_top_list"];
+    get: operations["deal_stats_top_retrieve"];
     put?: never;
     post?: never;
     delete?: never;
@@ -306,7 +306,7 @@ export interface paths {
     };
     /**
      * List Deals
-     * @description List all available deals
+     * @description List all available deals with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
     get: operations["deals_list"];
     put?: never;
@@ -350,15 +350,71 @@ export interface paths {
     };
     /**
      * Featured Deals
-     * @description List featured deals
+     * @description List featured deals with pagination and ordering. Returns paginated results with metadata including current page, total pages, and navigation information.
      */
-    get: operations["deals_featured_list"];
+    get: operations["deals_featured_retrieve"];
     put?: never;
     post?: never;
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
+    trace?: never;
+  };
+  "/api/v1/promotions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List promotions
+     * @description List all promotions
+     */
+    get: operations["promotions_list"];
+    put?: never;
+    /**
+     * Create promotion
+     * @description Create a new promotion
+     */
+    post: operations["promotions_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/promotions/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get promotion
+     * @description Retrieve a specific promotion by UUID
+     */
+    get: operations["promotions_retrieve"];
+    /**
+     * Update promotion
+     * @description Update a promotion
+     */
+    put: operations["promotions_update"];
+    post?: never;
+    /**
+     * Delete promotion
+     * @description Delete a promotion
+     */
+    delete: operations["promotions_destroy"];
+    options?: never;
+    head?: never;
+    /**
+     * Partial update promotion
+     * @description Partially update a promotion
+     */
+    patch: operations["promotions_partial_update"];
     trace?: never;
   };
   "/api/v1/telegram/send_message": {
@@ -439,7 +495,8 @@ export interface components {
       description?: string;
       /** @description Convert comma-separated keywords to a list. */
       readonly keywords: string[];
-      readonly logo_url: string;
+      /** Format: uri */
+      logo_url?: string | null;
     };
     /** @description Serializer for detailed Deal representation. */
     DealDetailResponseRequest: {
@@ -459,6 +516,13 @@ export interface components {
       /** Format: uri */
       referral_link: string;
       description?: string;
+      /** Format: binary */
+      logo_url?: string | null;
+    };
+    /** @description Serializer for paginated Deal response. */
+    DealPaginatedResponse: {
+      results: components["schemas"]["DealDetailResponse"][];
+      pagination: components["schemas"]["PaginationMetadata"];
     };
     DealStats: {
       /** Format: uuid */
@@ -482,6 +546,22 @@ export interface components {
       /** Format: date */
       week_end: string;
       all_deals: number;
+    };
+    /** @description Serializer for paginated Deal Stats response. */
+    DealStatsPaginatedResponse: {
+      results: components["schemas"]["DealStats"][];
+      pagination: components["schemas"]["PaginationMetadata"];
+    };
+    /** @description Serializer for pagination metadata. */
+    PaginationMetadata: {
+      current_page: number;
+      total_pages: number;
+      page_size: number;
+      total_count: number;
+      has_next: boolean;
+      has_previous: boolean;
+      next_page: number | null;
+      previous_page: number | null;
     };
     PasswordResetConfirmRequest: {
       /** Format: email */
@@ -511,6 +591,39 @@ export interface components {
       /** Format: uri */
       referral_link?: string;
       description?: string;
+      /** Format: binary */
+      logo_url?: string | null;
+    };
+    PatchedPromotionsRequest: {
+      title?: string;
+      content?: string;
+      /** Format: binary */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url?: string;
+    };
+    Promotions: {
+      /** Format: uuid */
+      readonly uuid: string;
+      title: string;
+      content: string;
+      /** Format: uri */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url: string;
+      readonly created_by: string;
+      /** Format: date-time */
+      readonly created_at: string;
+      /** Format: date-time */
+      readonly updated_at: string;
+    };
+    PromotionsRequest: {
+      title: string;
+      content: string;
+      /** Format: binary */
+      image_background?: string | null;
+      /** Format: uri */
+      cta_url: string;
     };
     ResendVerificationCodeRequest: {
       /** Format: email */
@@ -566,7 +679,7 @@ export interface components {
       last_name?: string;
       phone_number?: string;
       /** Format: uri */
-      image?: string | null;
+      readonly image_url: string;
       /**
        * Verified
        * @description Designates whether this user has verified their accounts.
@@ -580,15 +693,7 @@ export interface components {
       date_joined?: string;
       /** Format: date-time */
       last_login?: string | null;
-    };
-    UserProfileUpdateRequest: {
-      first_name?: string;
-      last_name?: string;
-      phone_number?: string;
-      /** Format: binary */
-      image?: string | null;
-      timezone?: string;
-      locale?: string;
+      country?: string;
     };
     UserRegistration: {
       /**
@@ -825,9 +930,14 @@ export interface operations {
     };
     requestBody?: {
       content: {
-        "application/json": components["schemas"]["UserProfileUpdateRequest"];
-        "application/x-www-form-urlencoded": components["schemas"]["UserProfileUpdateRequest"];
-        "multipart/form-data": components["schemas"]["UserProfileUpdateRequest"];
+        "multipart/form-data": {
+          first_name?: string;
+          last_name?: string;
+          phone_number?: string;
+          /** Format: binary */
+          image?: string;
+          country?: string;
+        };
       };
     };
     responses: {
@@ -944,9 +1054,14 @@ export interface operations {
       };
     };
   };
-  deal_stats_top_list: {
+  deal_stats_top_retrieve: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -958,14 +1073,23 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealStats"][];
+          "application/json": components["schemas"]["DealStatsPaginatedResponse"];
         };
       };
     };
   };
   deals_list: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Order direction */
+        order?: "asc" | "desc";
+        /** @description Field to order by */
+        order_by?: "created_at" | "name" | "updated_at";
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -977,7 +1101,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealDetailResponse"][];
+          "application/json": components["schemas"]["DealPaginatedResponse"][];
         };
       };
     };
@@ -1106,7 +1230,35 @@ export interface operations {
       };
     };
   };
-  deals_featured_list: {
+  deals_featured_retrieve: {
+    parameters: {
+      query?: {
+        /** @description Order direction */
+        order?: "asc" | "desc";
+        /** @description Field to order by */
+        order_by?: "created_at" | "name" | "updated_at";
+        /** @description Page number */
+        page?: number;
+        /** @description Number of deals per page */
+        page_size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DealPaginatedResponse"];
+        };
+      };
+    };
+  };
+  promotions_list: {
     parameters: {
       query?: never;
       header?: never;
@@ -1120,7 +1272,144 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["DealDetailResponse"][];
+          "application/json": components["schemas"]["Promotions"][];
+        };
+      };
+    };
+  };
+  promotions_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "multipart/form-data": {
+          /** @description Title of the promotion */
+          title: string;
+          /** @description Content of the promotion */
+          content: string;
+          /**
+           * Format: binary
+           * @description Background image file (optional)
+           */
+          image_background?: string | null;
+          /**
+           * Format: uri
+           * @description Call-to-action URL
+           */
+          cta_url: string;
+        };
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PromotionsRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["PromotionsRequest"];
+        "multipart/form-data": components["schemas"]["PromotionsRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
+        };
+      };
+    };
+  };
+  promotions_destroy: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description No response body */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  promotions_partial_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description A unique integer value identifying this Promotion. */
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["PatchedPromotionsRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["PatchedPromotionsRequest"];
+        "multipart/form-data": components["schemas"]["PatchedPromotionsRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Promotions"];
         };
       };
     };

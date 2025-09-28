@@ -6,10 +6,12 @@ import useGetFeaturedDeals from "@/hooks/queries/useGetFeaturedDeals";
 
 function FeaturedDealsSection() {
   const {
-    data: featuredDeals,
+    data,
     isLoading: isLoadingFeatured,
     error: featuredError,
   } = useGetFeaturedDeals();
+
+  const featuredDeals = data?.results ?? [];
 
   if (!featuredDeals || featuredDeals.length === 0) {
     return null;

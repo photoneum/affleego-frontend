@@ -152,7 +152,7 @@ export function HotDealCard({ deal }: HotDealCardProps) {
             )}
 
             {/* Enhanced metrics section */}
-            <div className="flex flex-col space-y-3">
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {deal.projected_payout && (
                 <div className="group/metric relative overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-900/30 to-green-900/30 p-3 backdrop-blur-sm">
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/5 to-green-400/5 opacity-0 transition-opacity group-hover/metric:opacity-100" />
