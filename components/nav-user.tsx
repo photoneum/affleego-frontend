@@ -28,6 +28,7 @@ export function NavUser() {
   const { isMobile } = useSidebar();
   const { data: session } = useSession();
   const user = session?.user;
+  console.log("🚀 ~ NavUser ~ user:", user);
 
   return (
     <SidebarMenu>

@@ -12,6 +12,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 
+import { BusinessLogoHeader } from "@/components/business-logo-header";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -21,7 +22,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { UserAvatar } from "@/components/user-avatar";
 
 // This is navigation items for the sidebar.
 const navigationItems = [
@@ -72,7 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <UserAvatar />
+        <BusinessLogoHeader />
       </SidebarHeader>
       <SidebarContent className="bg-[#11111A] py-3">
         <NavMain items={navigationItems} />
