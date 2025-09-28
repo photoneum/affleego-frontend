@@ -1,8 +1,17 @@
 "use client";
 
+import Link from "next/link";
+
 import { useSession } from "next-auth/react";
 
-import { BadgeCheck, Bell, ChevronRight, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  Bell,
+  ChevronRight,
+  CircleUserRound,
+  LogOut,
+  ShieldUser,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -87,6 +96,23 @@ export function NavUser() {
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            {user?.type === "admin" && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/admin">
+                    <ShieldUser />
+                    Admin Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">
+                    <CircleUserRound />
+                    User Dashboard
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
               <LogOut />

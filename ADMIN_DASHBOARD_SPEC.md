@@ -76,11 +76,6 @@ app/admin/
 ### Backend API Requirements
 
 ```yaml
-# Authentication & User Type Validation
-GET /api/v1/admin/auth/verify
-- Validate admin user type
-- Return admin permissions/capabilities
-
 # Admin Dashboard Overview
 GET /api/v1/admin/dashboard/overview
 - System-wide statistics
@@ -101,7 +96,7 @@ GET /api/v1/admin/dashboard/overview
 
    - Create `app/admin/page.tsx`
    - Implement overview cards with key metrics
-   - Add recent activity feed
+   - Add recent admin activity feed
    - Quick action buttons to major sections
 
 3. **Navigation Updates**
