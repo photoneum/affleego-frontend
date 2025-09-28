@@ -152,14 +152,6 @@ GET /api/v1/support/contacts
 PUT /api/v1/user/profile
 - Update user profile data
 - Avatar upload support
-
-GET /api/v1/user/external-affiliates
-- External network connections
-- Verification status
-
-POST /api/v1/user/external-affiliates/verify
-- Verify external affiliate accounts
-- Handle verification process
 ```
 
 ### Frontend Implementation
@@ -169,11 +161,6 @@ POST /api/v1/user/external-affiliates/verify
    - Create `app/dashboard/profile/page.tsx`
    - Implement profile edit form
    - Add avatar upload with preview
-
-2. **External Affiliates Management**
-   - Create external affiliates verification flow
-   - Implement status indicators
-   - Add connection management UI
 
 ## Phase 6: Future Features Preparation (Week 8)
 

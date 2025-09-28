@@ -15,6 +15,7 @@ applyTo: "**"
 - Any hook that is used in a page, that page should be marked as "use client", use client components should be minimized, use server components where possible.
 - Destructure import objects from React rather than importing the entire React object e.g. { useEffect, useState }.
 - Always ensure dashboard stat cards and overview components are fully mobile responsive using Tailwind best practices.
+- Don't fix any linting or type errors just focus on implementing the requested feature or fix.
 
 ## Project Context
 
@@ -28,6 +29,7 @@ applyTo: "**"
 - HotDealCard and DealsCard now both render the company logo from logo_url in a perfectly rounded container, with fallback Award icon if logo_url is missing or empty. Both use alt text and aria-label for accessibility. Container size, border, and shadow are visually consistent (48x48px, bg-white, p-1, shadow-lg, ring-yellow-300/40). Type safety is robust (logo_url is always a string, fallback checks for empty string). Implementation follows OpenAPI schema and shadcn/ui best practices.
 - DealsOverview, InfoCardSkeleton, FeaturedDealsSection, and DealsSection components are now fully mobile responsive using Tailwind grid and spacing best practices.
 - PromotionCard component now implemented with sleek design, Memphis fallback background, framer-motion animations, and full responsiveness/accessibility
+- WebinarsPage completely refactored with mobile-responsive design, DashboardPageHeader integration, enhanced coming soon card with framer-motion animations, Memphis design background elements, features preview section, and full Tailwind responsiveness
 
 ## Coding Patterns
 
