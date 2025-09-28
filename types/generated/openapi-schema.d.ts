@@ -170,7 +170,7 @@ export interface paths {
     get?: never;
     /**
      * Update User Profile
-     * @description Update user profile data
+     * @description Update user profile data. The image field accepts binary file uploads. Use multipart/form-data content type when uploading files.
      */
     put: operations["auth_update_profile_update"];
     post?: never;
@@ -679,7 +679,7 @@ export interface components {
       last_name?: string;
       phone_number?: string;
       /** Format: uri */
-      image?: string | null;
+      readonly image_url: string;
       /**
        * Verified
        * @description Designates whether this user has verified their accounts.
@@ -693,15 +693,7 @@ export interface components {
       date_joined?: string;
       /** Format: date-time */
       last_login?: string | null;
-    };
-    UserProfileUpdateRequest: {
-      first_name?: string;
-      last_name?: string;
-      phone_number?: string;
-      /** Format: binary */
-      image?: string | null;
-      timezone?: string;
-      locale?: string;
+      country?: string;
     };
     UserRegistration: {
       /**
@@ -938,9 +930,14 @@ export interface operations {
     };
     requestBody?: {
       content: {
-        "application/json": components["schemas"]["UserProfileUpdateRequest"];
-        "application/x-www-form-urlencoded": components["schemas"]["UserProfileUpdateRequest"];
-        "multipart/form-data": components["schemas"]["UserProfileUpdateRequest"];
+        "multipart/form-data": {
+          first_name?: string;
+          last_name?: string;
+          phone_number?: string;
+          /** Format: binary */
+          image?: string;
+          country?: string;
+        };
       };
     };
     responses: {
